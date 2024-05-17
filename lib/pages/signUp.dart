@@ -216,12 +216,22 @@ class SignUp extends StatelessWidget {
                   margin: EdgeInsets.fromLTRB(26, 0, 26, 0),
                   child: ElevatedButton(
                     onPressed: () async {
-                      bool  state = await _signUp(context);
+                      // show circular progress indicator
+                      showDialog(
+                        context: context,
+                        barrierDismissible: false,
+                        builder: (BuildContext context) {
+                          return Center(
+                            child: CircularProgressIndicator(),
+                          );
+                        },
+                      );
+                      bool state = await _signUp(context);
                       if (state) {
                         context.goNamed('home');
                       }
-
-                      
+                      // hide circular progress indicator
+                      Navigator.of(context).pop();
                     },
                     child: Align(
                       alignment: Alignment.center,
@@ -334,6 +344,10 @@ class SignUp extends StatelessWidget {
       User? user = await _auth.signUpWithEmailAndPassword(email, password);
       if (user != null) {
         print('User Successgully Created!');
+        await FirebaseFirestore.instance.collection('users').doc(user.uid).set({
+          'username': username,
+          'email': email,
+        });
         return true;
       }
     } catch (e) {
@@ -342,8 +356,8 @@ class SignUp extends StatelessWidget {
           content: Text('Some error occured while signing up: $e'),
         ),
       );
-        return false;
+      return false;
     }
-  return false;
+    return false;
   }
 }
