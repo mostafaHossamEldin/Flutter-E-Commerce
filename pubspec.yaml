@@ -40,6 +40,7 @@ dependencies:
   firebase_auth: ^4.19.6
   google_fonts: ^6.2.1
   cloud_firestore: ^4.17.4
+  flutter_hooks: ^0.20.5
 
 dev_dependencies:
   flutter_test:
@@ -57,7 +58,13 @@ dev_dependencies:
 
 # The following section is specific to Flutter packages.
 flutter:
-
+  assets:
+    - assets/fonts/
+  fonts:
+    - family: CustomFont
+      fonts:
+        - asset: assets/fonts/JacquesFrancois-Regular.ttf
+          weight: 700
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in
   # the material Icons class.

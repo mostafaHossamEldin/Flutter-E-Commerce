@@ -6,203 +6,159 @@ import 'dart:ui';
 import 'package:go_router/go_router.dart';
 
 import '../user_auth/firebase_auth_services.dart';
+import '../components/textfield.dart';
+import '../components/primaryButton.dart';
 
 class Login extends StatelessWidget {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
   final FirebaseAuthServices _auth = FirebaseAuthServices();
-  
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body:
-       Container(
+      body: Container(
         padding: EdgeInsets.fromLTRB(26, 33, 26, 0),
-        child: 
-        SingleChildScrollView(
+        child: SingleChildScrollView(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Container(
-                margin: EdgeInsets.fromLTRB(0, 0, 0, 110),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Column(
-                      children: [
-                        Text(
-                          'Travel Gear',
-                          style: TextStyle(
-                            fontWeight: FontWeight.w400,
-                            fontSize: 40,
-                            height: 1.3,
-                            color: Color(0xFF1C1C1C),
-                          ),
-                        ),
-                        Text(
-                          'My Life My Gadget',
-                          style: TextStyle(
-                            fontWeight: FontWeight.w400,
-                            fontSize: 14,
-                            color: Color(0xFF1C1C1C),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
-              ),
-              Container(
-                margin: EdgeInsets.fromLTRB(0, 0, 0, 50),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      'Welcome!',
-                      style: TextStyle(
-                        fontWeight: FontWeight.w700,
-                        fontSize: 24,
-                        color: Color(0xFF1C1C1C),
-                      ),
-                    ),
-                    Text(
-                      'please login or sign up to access more features',
-                      style: TextStyle(
-                        fontWeight: FontWeight.w400,
-                        fontSize: 15,
-                        color: Color(0xFF747474),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              Container(
-                margin: EdgeInsets.fromLTRB(26, 0, 36, 21),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Align(
-                      alignment: Alignment.topLeft,
-                      child: Text(
-                        'Email',
+              const Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Column(
+                    children: [
+                      Text(
+                        'Travel Gear',
                         style: TextStyle(
-                          fontWeight: FontWeight.w700,
-                          fontSize: 20,
+                          fontFamily: 'CustomFont',
+                          fontWeight: FontWeight.w400,
+                          fontSize: 40,
+                          height: 1.3,
                           color: Color(0xFF1C1C1C),
                         ),
                       ),
-                    ),
-                    TextField(
-                      controller: _emailController,
-                      decoration: InputDecoration(
-                          hintText: "JackDanial@google.com",
-                          border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(18),
-                              borderSide: BorderSide.none),
-                          prefixIcon: const Icon(Icons.email_outlined)),
-                    ),
-                  ],
-                ),
-              ),
-              Container(
-                margin: EdgeInsets.fromLTRB(26, 0, 36, 21),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Align(
-                      alignment: Alignment.topLeft,
-                      child: Text(
-                        'Password',
+                      Text(
+                        'My Life My Gadget',
                         style: TextStyle(
-                          fontWeight: FontWeight.w700,
-                          fontSize: 20,
+                          fontFamily: 'CustomFont',
+                          fontWeight: FontWeight.w400,
+                          fontSize: 14,
                           color: Color(0xFF1C1C1C),
                         ),
                       ),
-                    ),
-                    TextField(
-                      controller: _passwordController,
-                      decoration: InputDecoration(
-                        hintText: "123qwe",
-                        border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(18),
-                            borderSide: BorderSide.none),
-                        prefixIcon: const Icon(Icons.password),
-                      ),
-                      obscureText: true,
-                    ),
-                  ],
-                ),
+                    ],
+                  ),
+                ],
               ),
-              Container(
-                margin: EdgeInsets.fromLTRB(0, 0, 0, 11),
-                child: ElevatedButton(
-                  onPressed: () async {
-                    showDialog(
-                      context: context,
-                      barrierDismissible: false,
-                      builder: (BuildContext context) {
-                        return Center(
-                          child: CircularProgressIndicator(),
-                        );
-                      },
+              const SizedBox(height: 70),
+              const Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    'Welcome!',
+                    style: TextStyle(
+                      fontWeight: FontWeight.w700,
+                      fontSize: 24,
+                      color: Color(0xFF1C1C1C),
+                    ),
+                  ),
+                  Text(
+                    'please login or sign up to access more features',
+                    style: TextStyle(
+                      fontWeight: FontWeight.w400,
+                      fontSize: 15,
+                      color: Color(0xFF747474),
+                    ),
+                  ),
+                ],
+              ),
+              const SizedBox(height: 40),
+              CustomTextfield(
+                fieldName: 'Email',
+                hintText: 'JackDanial@google.com',
+                isPassword: false,
+                controller: _emailController,
+                isValid: (value) {
+                  if (RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$')
+                          .matchAsPrefix(value.toString()) ==
+                      null) {
+                    return false;
+                  }
+                  return true;
+                },
+              ),
+              const SizedBox(height: 40),
+              CustomTextfield(
+                fieldName: 'Password',
+                hintText: '1234qwer',
+                isPassword: true,
+                controller: _passwordController,
+                isValid: (value) {
+                  if (value == null || value.isEmpty || value.length < 8) {
+                    return false;
+                  }
+                  return true;
+                },
+              ),
+              const SizedBox(height: 40),
+              CustomPrimaryButton(
+                text: "Login",
+                height: 50,
+                width: double.infinity,
+                onPressed: () async {
+                  showDialog(
+                    context: context,
+                    barrierDismissible: false,
+                    builder: (BuildContext context) {
+                      return const Center(
+                        child: CircularProgressIndicator(),
+                      );
+                    },
+                  );
+                  var email = _emailController.text;
+                  var password = _passwordController.text;
+                  if (email.isEmpty ||
+                      password.isEmpty ||
+                      RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$')
+                              .matchAsPrefix(email) ==
+                          null ||
+                      password.length < 8) {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(
+                        content: Text('Please fill all fields'),
+                      ),
                     );
-                    var email = _emailController.text;
-                    var password = _passwordController.text;
-                    if (email.isEmpty || password.isEmpty) {
+                  }
+                  try {
+                    User? user =
+                        await _auth.signInWithEmailAndPassword(email, password);
+                    if (user != null) {
+                      print('User Logged In!');
+                      context.goNamed('home');
+                    } else {
                       ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(
-                          content: Text('Please fill all fields'),
+                        const SnackBar(
+                          content: Text('User not found'),
                         ),
                       );
                     }
-                    try {
-                      User? user =
-                          await _auth.signInWithEmailAndPassword(email, password);
-                      if (user != null) {
-                        print('User Logged In!');
-                        context.goNamed('home');
-                      }
-                    } catch (e) {
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(
-                          content:
-                              Text('Some error occured while signing up: $e'),
-                        ),
-                      );
-                    } finally {
-                      Navigator.of(context).pop();
-                    }
-                  },
-                  child: Align(
-                    alignment: Alignment.center,
-                    child: Container(
-                      padding: EdgeInsets.fromLTRB(0, 13.5, 0, 13.5),
-                      child: Text(
-                        'Login',
-                        style: TextStyle(
-                          fontWeight: FontWeight.w700,
-                          fontSize: 16,
-                          color: Color(0xFFFFFFFF),
-                        ),
+                  } catch (e) {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(
+                        content:
+                            Text('Some error occured while signing up: $e'),
                       ),
-                    ),
-                  ),
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Color(0xFF26356E),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(50),
-                    ),
-                  ),
-                ),
+                    );
+                  } finally {
+                    Navigator.of(context).pop();
+                  }
+                },
               ),
+              const SizedBox(height: 10),
               Container(
-                margin: EdgeInsets.fromLTRB(26, 0, 26, 57),
                 child: Align(
                   alignment: Alignment.topLeft,
                   child: RichText(
