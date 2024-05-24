@@ -1,7 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'dart:ui';
 
 import 'package:go_router/go_router.dart';
 
@@ -11,6 +10,8 @@ class Login extends StatelessWidget {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
   final FirebaseAuthServices _auth = FirebaseAuthServices();
+
+  Login({super.key});
   
 
   @override
@@ -18,7 +19,7 @@ class Login extends StatelessWidget {
     return Scaffold(
       body:
        Container(
-        padding: EdgeInsets.fromLTRB(26, 33, 26, 0),
+        padding: const EdgeInsets.fromLTRB(26, 33, 26, 0),
         child: 
         SingleChildScrollView(
           child: Column(
@@ -26,8 +27,8 @@ class Login extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Container(
-                margin: EdgeInsets.fromLTRB(0, 0, 0, 110),
-                child: Row(
+                margin: const EdgeInsets.fromLTRB(0, 0, 0, 110),
+                child: const Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Column(
@@ -55,8 +56,8 @@ class Login extends StatelessWidget {
                 ),
               ),
               Container(
-                margin: EdgeInsets.fromLTRB(0, 0, 0, 50),
-                child: Column(
+                margin: const EdgeInsets.fromLTRB(0, 0, 0, 50),
+                child: const Column(
                   mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -80,12 +81,12 @@ class Login extends StatelessWidget {
                 ),
               ),
               Container(
-                margin: EdgeInsets.fromLTRB(26, 0, 36, 21),
+                margin: const EdgeInsets.fromLTRB(26, 0, 36, 21),
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Align(
+                    const Align(
                       alignment: Alignment.topLeft,
                       child: Text(
                         'Email',
@@ -109,12 +110,12 @@ class Login extends StatelessWidget {
                 ),
               ),
               Container(
-                margin: EdgeInsets.fromLTRB(26, 0, 36, 21),
+                margin: const EdgeInsets.fromLTRB(26, 0, 36, 21),
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Align(
+                    const Align(
                       alignment: Alignment.topLeft,
                       child: Text(
                         'Password',
@@ -140,14 +141,14 @@ class Login extends StatelessWidget {
                 ),
               ),
               Container(
-                margin: EdgeInsets.fromLTRB(0, 0, 0, 11),
+                margin: const EdgeInsets.fromLTRB(0, 0, 0, 11),
                 child: ElevatedButton(
                   onPressed: () async {
                     showDialog(
                       context: context,
                       barrierDismissible: false,
                       builder: (BuildContext context) {
-                        return Center(
+                        return const Center(
                           child: CircularProgressIndicator(),
                         );
                       },
@@ -156,7 +157,7 @@ class Login extends StatelessWidget {
                     var password = _passwordController.text;
                     if (email.isEmpty || password.isEmpty) {
                       ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(
+                        const SnackBar(
                           content: Text('Please fill all fields'),
                         ),
                       );
@@ -179,11 +180,17 @@ class Login extends StatelessWidget {
                       Navigator.of(context).pop();
                     }
                   },
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: const Color(0xFF26356E),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(50),
+                    ),
+                  ),
                   child: Align(
                     alignment: Alignment.center,
                     child: Container(
-                      padding: EdgeInsets.fromLTRB(0, 13.5, 0, 13.5),
-                      child: Text(
+                      padding: const EdgeInsets.fromLTRB(0, 13.5, 0, 13.5),
+                      child: const Text(
                         'Login',
                         style: TextStyle(
                           fontWeight: FontWeight.w700,
@@ -193,22 +200,16 @@ class Login extends StatelessWidget {
                       ),
                     ),
                   ),
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Color(0xFF26356E),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(50),
-                    ),
-                  ),
                 ),
               ),
               Container(
-                margin: EdgeInsets.fromLTRB(26, 0, 26, 57),
+                margin: const EdgeInsets.fromLTRB(26, 0, 26, 57),
                 child: Align(
                   alignment: Alignment.topLeft,
                   child: RichText(
                     text: TextSpan(
                       text: "Don't have an account? ",
-                      style: TextStyle(
+                      style: const TextStyle(
                         fontWeight: FontWeight.w400,
                         fontSize: 15,
                         color: Color(0xFF747474),
@@ -216,7 +217,7 @@ class Login extends StatelessWidget {
                       children: [
                         TextSpan(
                           text: 'Sign Up',
-                          style: TextStyle(
+                          style: const TextStyle(
                             fontWeight: FontWeight.w400,
                             fontSize: 15,
                             height: 1.3,

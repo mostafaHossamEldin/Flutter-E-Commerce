@@ -1,7 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'dart:ui';
 import 'package:flutter/gestures.dart';
 import 'package:go_router/go_router.dart';
 
@@ -16,6 +15,8 @@ class SignUp extends StatelessWidget {
       TextEditingController();
   final FirebaseAuthServices _auth = FirebaseAuthServices();
 
+  SignUp({super.key});
+
   @override
   void dispose() {
     _usernameController.dispose();
@@ -29,18 +30,18 @@ class SignUp extends StatelessWidget {
     return Scaffold(
       body: SingleChildScrollView(
         child: Container(
-          decoration: BoxDecoration(
+          decoration: const BoxDecoration(
             color: Color(0xFFFFFFFF),
           ),
           child: Container(
-            padding: EdgeInsets.fromLTRB(26, 33, 26, 0),
+            padding: const EdgeInsets.fromLTRB(26, 33, 26, 0),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Container(
-                  margin: EdgeInsets.fromLTRB(0, 0, 0, 50),
-                  child: Row(
+                  margin: const EdgeInsets.fromLTRB(0, 0, 0, 50),
+                  child: const Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Column(
@@ -68,8 +69,8 @@ class SignUp extends StatelessWidget {
                   ),
                 ),
                 Container(
-                  margin: EdgeInsets.fromLTRB(0, 0, 0, 50),
-                  child: Column(
+                  margin: const EdgeInsets.fromLTRB(0, 0, 0, 50),
+                  child: const Column(
                     mainAxisAlignment: MainAxisAlignment.start,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -93,12 +94,12 @@ class SignUp extends StatelessWidget {
                   ),
                 ),
                 Container(
-                  margin: EdgeInsets.fromLTRB(26, 0, 36, 21),
+                  margin: const EdgeInsets.fromLTRB(26, 0, 36, 21),
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.start,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Align(
+                      const Align(
                         alignment: Alignment.topLeft,
                         child: Text(
                           'Username',
@@ -122,12 +123,12 @@ class SignUp extends StatelessWidget {
                   ),
                 ),
                 Container(
-                  margin: EdgeInsets.fromLTRB(26, 0, 36, 21),
+                  margin: const EdgeInsets.fromLTRB(26, 0, 36, 21),
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.start,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Align(
+                      const Align(
                         alignment: Alignment.topLeft,
                         child: Text(
                           'Email',
@@ -151,12 +152,12 @@ class SignUp extends StatelessWidget {
                   ),
                 ),
                 Container(
-                  margin: EdgeInsets.fromLTRB(26, 0, 36, 21),
+                  margin: const EdgeInsets.fromLTRB(26, 0, 36, 21),
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.start,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Align(
+                      const Align(
                         alignment: Alignment.topLeft,
                         child: Text(
                           'Password',
@@ -182,12 +183,12 @@ class SignUp extends StatelessWidget {
                   ),
                 ),
                 Container(
-                  margin: EdgeInsets.fromLTRB(26, 0, 36, 10),
+                  margin: const EdgeInsets.fromLTRB(26, 0, 36, 10),
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.start,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Align(
+                      const Align(
                         alignment: Alignment.topLeft,
                         child: Text(
                           'Confirm Password',
@@ -213,7 +214,7 @@ class SignUp extends StatelessWidget {
                   ),
                 ),
                 Container(
-                  margin: EdgeInsets.fromLTRB(26, 0, 26, 0),
+                  margin: const EdgeInsets.fromLTRB(26, 0, 26, 0),
                   child: ElevatedButton(
                     onPressed: () async {
                       // show circular progress indicator
@@ -221,7 +222,7 @@ class SignUp extends StatelessWidget {
                         context: context,
                         barrierDismissible: false,
                         builder: (BuildContext context) {
-                          return Center(
+                          return const Center(
                             child: CircularProgressIndicator(),
                           );
                         },
@@ -233,11 +234,17 @@ class SignUp extends StatelessWidget {
                       // hide circular progress indicator
                       Navigator.of(context).pop();
                     },
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: const Color(0xFF26356E),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(50),
+                      ),
+                    ),
                     child: Align(
                       alignment: Alignment.center,
                       child: Container(
-                        padding: EdgeInsets.fromLTRB(0, 13.5, 0, 13.5),
-                        child: Text(
+                        padding: const EdgeInsets.fromLTRB(0, 13.5, 0, 13.5),
+                        child: const Text(
                           'Sign up',
                           style: TextStyle(
                             fontWeight: FontWeight.w700,
@@ -247,22 +254,16 @@ class SignUp extends StatelessWidget {
                         ),
                       ),
                     ),
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Color(0xFF26356E),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(50),
-                      ),
-                    ),
                   ),
                 ),
                 Container(
-                  margin: EdgeInsets.fromLTRB(26, 0, 26, 57),
+                  margin: const EdgeInsets.fromLTRB(26, 0, 26, 57),
                   child: Align(
                     alignment: Alignment.topLeft,
                     child: RichText(
                       text: TextSpan(
                         text: 'Already have an account? ',
-                        style: TextStyle(
+                        style: const TextStyle(
                           fontWeight: FontWeight.w400,
                           fontSize: 15,
                           color: Color(0xFF747474),
@@ -270,7 +271,7 @@ class SignUp extends StatelessWidget {
                         children: [
                           TextSpan(
                             text: 'Login',
-                            style: TextStyle(
+                            style: const TextStyle(
                               fontWeight: FontWeight.w400,
                               fontSize: 15,
                               height: 1.3,
@@ -324,7 +325,7 @@ class SignUp extends StatelessWidget {
         password.isEmpty ||
         confirmPassword.isEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
+        const SnackBar(
           content: Text('Please fill all fields'),
         ),
       );
@@ -333,7 +334,7 @@ class SignUp extends StatelessWidget {
     if (password != confirmPassword) {
       if (password != confirmPassword) {
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
+          const SnackBar(
             content: Text('Passwords do not match'),
           ),
         );
