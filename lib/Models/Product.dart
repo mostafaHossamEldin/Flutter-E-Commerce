@@ -45,6 +45,7 @@ class Product {
     } else {
       avgRating = 0.0;
     }
+    isTopRated = avgRating >= 4.5;
   }
 
   factory Product.fromFirestore(DocumentSnapshot doc) {
@@ -73,7 +74,8 @@ class Product {
       category: data['category'] ?? '',
       avgRating: (data['avgRating'] is int) ? (data['avgRating'] as int).toDouble() : (data['avgRating'] ?? 0.0),
       ratings: parsedRatings,
-      isTopRated: data['isTopRated'] ?? false,
+      // isTopRated: data['isTopRated'] ?? false,
+      isTopRated: (data['avgRating'] is int) ? (data['avgRating'] as int).toDouble() >= 4.5 : (data['avgRating'] ?? 0.0) >= 4.5,
       comments: parsedComments,
       vendor: data['vendor'] ?? '',
       imageURL: data['imageURL'] ?? '',

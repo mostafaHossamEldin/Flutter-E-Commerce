@@ -117,7 +117,8 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
                       ),
                       const SizedBox(width: 8),
                       Text(
-                        '${product.avgRating.toStringAsFixed(1)} Rating (${product.comments.length} Reviews)',
+                      //  '${product.avgRating.toStringAsFixed(1)} Rating (${product.comments.length} Reviews)',
+                        '${product.avgRating.toStringAsFixed(1)} Rating (${product.ratings.length} Reviews)',
                         style: const TextStyle(fontSize: 16),
                       ),
                     ],
