@@ -133,7 +133,7 @@ class Login extends HookWidget {
                             password.length < 8) {
                           ScaffoldMessenger.of(context).showSnackBar(
                             const SnackBar(
-                              content: Text('Please fill all fields'),
+                              content: Text('Please fill all fields correctly'),
                             ),
                           );
                           isLoading.value = false;
@@ -151,7 +151,7 @@ class Login extends HookWidget {
                                 user.photoURL,
                                 user.refreshToken);
                             // removing dialog
-                            context.goNamed('home');
+                            context.go('/');
                           } else {
                             ScaffoldMessenger.of(context).showSnackBar(
                               const SnackBar(
