@@ -4,12 +4,13 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 import '../providers/routesProvider.dart';
+import '../providers/authProvider.dart';
 
-class CustomNavBar extends HookWidget {
-  final bool isLoggedIn = false;
+class CustomNavBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final routeProvider = Provider.of<MyGoRouter>(context);
+    final isLoggedIn = Provider.of<AAProvider>(context).isLoggedIn;
     final currentRoute = routeProvider.currentRoute;
     final selectedIndex = (currentRoute == '/'
         ? 0
@@ -54,7 +55,7 @@ class CustomNavBar extends HookWidget {
                     iconSize: 35,
                     icon: const Icon(CupertinoIcons.house_fill),
                     onPressed: () {
-                      routeProvider.getRouter.pushNamed('/');
+                      routeProvider.getRouter.pushNamed('home');
                     },
                   ),
                 ),
@@ -73,7 +74,7 @@ class CustomNavBar extends HookWidget {
                         iconSize: 35,
                         icon: const Icon(CupertinoIcons.cart_fill),
                         onPressed: () {
-                          routeProvider.getRouter.pushNamed('/cart');
+                          routeProvider.getRouter.pushNamed('cart');
                         },
                       ),
                     ],
@@ -94,7 +95,7 @@ class CustomNavBar extends HookWidget {
                         iconSize: 35,
                         icon: const Icon(CupertinoIcons.bell_fill),
                         onPressed: () {
-                          routeProvider.getRouter.pushNamed('/notification');
+                          routeProvider.getRouter.pushNamed('notifications');
                         },
                       ),
                     ],
@@ -115,7 +116,7 @@ class CustomNavBar extends HookWidget {
                         iconSize: 35,
                         icon: const Icon(CupertinoIcons.person_fill),
                         onPressed: () {
-                          routeProvider.getRouter.pushNamed('/profile');
+                          routeProvider.getRouter.pushNamed('profile');
                         },
                       ),
                     ],
@@ -136,7 +137,7 @@ class CustomNavBar extends HookWidget {
                     iconSize: 35,
                     icon: const Icon(CupertinoIcons.house_fill),
                     onPressed: () {
-                      routeProvider.getRouter.pushNamed('/');
+                      routeProvider.getRouter.pushNamed('home');
                     },
                   ),
                 ),
