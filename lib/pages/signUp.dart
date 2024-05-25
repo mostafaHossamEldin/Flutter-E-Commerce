@@ -247,9 +247,11 @@ class SignUp extends HookWidget {
       }
     }
     try {
+      print("objectobjectobjectobject");
       return await userProvider.signupUser(email, password, username, isVendor,
           isVendor ? _companyNameController.text : '');
     } catch (e) {
+      print("objectobjectobjectobjectTTTTTTTTTT");
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: Text('Some error occured while signing up: $e'),

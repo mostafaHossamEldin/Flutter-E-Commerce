@@ -7,7 +7,6 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:go_router/go_router.dart';
 import 'firebase_options.dart';
 import 'widgets/navBarButtom.dart';
-import 'widgets/navBarTop.dart';
 
 import 'package:provider/provider.dart';
 import 'providers/routesProvider.dart';
@@ -44,6 +43,7 @@ class MyApp extends HookWidget {
   @override
   Widget build(BuildContext context) {
     final routeProvider = Provider.of<MyGoRouter>(context);
+    final userProvider = Provider.of<UserProvider>(context);
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Travel Gear',
@@ -54,28 +54,48 @@ class MyApp extends HookWidget {
             ? PreferredSize(
                 preferredSize: const Size.fromHeight(120),
                 child: Padding(
-                  padding: const EdgeInsets.fromLTRB(40, 50, 40, 20),
+                  padding: const EdgeInsets.fromLTRB(40, 30, 40, 0),
                   child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Builder(
-                          builder: (context) {
-                            return IconButton(
-                              iconSize: 45,
-                              color: Colors.black,
-                              icon: const Icon(CupertinoIcons.list_bullet),
-                              onPressed: () =>
-                                  Scaffold.of(context).openDrawer(),
-                            );
-                          },
-                        ),
-                        IconButton(
-                          iconSize: 45,
-                          color: Colors.black,
-                          icon: const Icon(CupertinoIcons.profile_circled),
-                          onPressed: () {},
-                        ),
-                      ]),
+                      children: (userProvider.user.isLoggedIn &&
+                              routeProvider.currentRoute != '/profile')
+                          ? [
+                              Builder(
+                                builder: (context) {
+                                  return IconButton(
+                                    iconSize: 45,
+                                    color: Colors.black,
+                                    icon:
+                                        const Icon(CupertinoIcons.list_bullet),
+                                    onPressed: () =>
+                                        Scaffold.of(context).openDrawer(),
+                                  );
+                                },
+                              ),
+                              IconButton(
+                                iconSize: 45,
+                                color: Colors.black,
+                                icon:
+                                    const Icon(CupertinoIcons.profile_circled),
+                                onPressed: () {
+                                  routeProvider.getRouter.push('/profile');
+                                },
+                              ),
+                            ]
+                          : [
+                              Builder(
+                                builder: (context) {
+                                  return IconButton(
+                                    iconSize: 45,
+                                    color: Colors.black,
+                                    icon:
+                                        const Icon(CupertinoIcons.list_bullet),
+                                    onPressed: () =>
+                                        Scaffold.of(context).openDrawer(),
+                                  );
+                                },
+                              ),
+                            ]),
                 ),
               )
             : null,

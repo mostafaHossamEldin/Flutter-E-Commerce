@@ -5,6 +5,7 @@ import '../pages/home.dart';
 import '../pages/login.dart';
 import '../pages/signUp.dart';
 import '../pages/view_all_page.dart';
+import '../pages/userProfile.dart';
 
 class MyNavigatorObserver extends NavigatorObserver {
   final Function(String) onPop;
@@ -29,37 +30,37 @@ class MyGoRouter extends ChangeNotifier {
       initialLocation: _currentRoute,
       routes: [
         GoRoute(
-          name:"home",
+          name: "home",
           path: '/',
           builder: (context, state) => const HomePage(),
         ),
         GoRoute(
-          name:"cart",
+          name: "cart",
           path: '/cart',
           builder: (context, state) => const HomePage(),
         ),
         GoRoute(
-          name:"notifications",
+          name: "notifications",
           path: '/notifications',
           builder: (context, state) => const HomePage(),
         ),
         GoRoute(
-          name:"profile",
+          name: "profile",
           path: '/profile',
-          builder: (context, state) => const HomePage(),
+          builder: (context, state) => UserProfile(),
         ),
         GoRoute(
-          name:"login",
+          name: "login",
           path: '/login',
           builder: (context, state) => Login(),
         ),
         GoRoute(
-          name:"signup",
+          name: "signup",
           path: '/signup',
           builder: (context, state) => SignUp(),
         ),
         GoRoute(
-          name:"view-all-orders",
+          name: "view-all-orders",
           path: '/my-orders',
           builder: (context, state) => SignUp(),
         ),

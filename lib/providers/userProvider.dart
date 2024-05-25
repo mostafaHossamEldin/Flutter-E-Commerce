@@ -47,6 +47,7 @@ class UserProvider extends ChangeNotifier {
         favorites: [],
         addresses: [],
       );
+      print("&salKheir");
       notifyListeners();
       return true;
     }
@@ -75,8 +76,9 @@ class UserProvider extends ChangeNotifier {
         cart: data.containsKey('cart') ? data['cart'] : {},
         companyName: data['companyName'] ?? '',
         gender: data.containsKey('gender') ? data['gender'] : 0,
-        profilePicture:
-            data.containsKey('profilePicture') ? data['profilePicture'] : Image.asset('assets/images/profile.png'),
+        profilePicture: data.containsKey('profilePicture')
+            ? data['profilePicture']
+            : Image.asset('assets/images/defaultPFP.jpg'),
         favorites: data.containsKey('favorites') ? data['favorites'] : [],
         addresses: data.containsKey('addresses') ? data['addresses'] : [],
       );

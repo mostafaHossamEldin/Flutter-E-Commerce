@@ -24,7 +24,7 @@ class CustomDrawer extends StatelessWidget {
             Container(
               alignment: Alignment.centerLeft,
               child: Padding(
-                padding: const EdgeInsets.fromLTRB(40, 50, 40, 20),
+                padding: const EdgeInsets.fromLTRB(40, 30, 40, 20),
                 child: Builder(
                   builder: (context) {
                     return IconButton(
