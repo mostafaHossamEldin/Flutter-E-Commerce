@@ -1,8 +1,14 @@
+import 'dart:math';
+
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 import '../providers/userProvider.dart';
+import '../user_auth/firebase_auth_services.dart';
 import '../widgets/editButton.dart';
+import '../widgets/primaryButton.dart';
 
 class UserProfile extends HookWidget {
   @override
@@ -27,6 +33,16 @@ class UserProfile extends HookWidget {
           const Text('City:'),
           const Text('Country:'),
           const Text('Postal Code:'),
+          CustomPrimaryButton(
+            text: "Logout",
+            height: 50,
+            width: double.infinity,
+            onPressed: () async{
+              await userProvider.logoutUser();
+              context.goNamed('login');
+            },
+// icon: Icon(Icons.logout_rounded)),
+          ),
         ],
       ),
     );

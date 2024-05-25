@@ -55,6 +55,30 @@ class UserProvider extends ChangeNotifier {
     return false;
   }
 
+  Future<bool> logoutUser() async{
+    try {
+      _user = Userdb(
+        uid: '',
+        email: '',
+        displayName: '',
+        isVendor: false,
+        cart: {},
+        isLoggedIn: false,
+        companyName: '',
+        gender: 0,
+        addresses: [],
+        profilePicture: Image.asset('assets/images/profile.png'),
+        favorites: [],
+      );
+      notifyListeners();
+      await FirebaseAuth.instance.signOut();
+      return true;
+    } catch (e) {
+      print(e);
+      return false;
+    }
+  }
+
   Future<bool> loginUser(email, password) async {
     var user = await _auth.signInWithEmailAndPassword(email, password);
     if (user != null) {
@@ -63,7 +87,6 @@ class UserProvider extends ChangeNotifier {
           .doc(user.uid)
           .get();
 
-      print("Hey papa");
       print(userData.data());
       final Map<String, dynamic> data = userData.data() as Map<String, dynamic>;
 
@@ -83,7 +106,6 @@ class UserProvider extends ChangeNotifier {
         addresses: data.containsKey('addresses') ? data['addresses'] : [],
       );
 
-      print("Dont worry papa");
       notifyListeners();
       return true;
     }
