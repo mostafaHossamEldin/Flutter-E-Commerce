@@ -44,9 +44,6 @@ class SignUp extends HookWidget {
                 child: CircularProgressIndicator(),
               )
             : Container(
-                decoration: const BoxDecoration(
-                  color: Color(0xFFFFFFFF),
-                ),
                 child: Container(
                   padding: const EdgeInsets.fromLTRB(26, 33, 26, 0),
                   child: Column(

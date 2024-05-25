@@ -25,6 +25,7 @@ Future<void> main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
+
   runApp(MultiProvider(
     providers: [
       ChangeNotifierProvider(create: (_) => goRouterProvider),
@@ -42,40 +43,44 @@ Future<void> main() async {
 class MyApp extends HookWidget {
   @override
   Widget build(BuildContext context) {
+    final routeProvider = Provider.of<MyGoRouter>(context);
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Travel Gear',
       home: Scaffold(
-        // appBar: AppBar(
-        //   leading: Builder(
-        //     builder: (context) => Padding(
-        //       padding: const EdgeInsets.all(20.0),
-        //       child: IconButton(
-        //         iconSize: 45,
-        //         icon: const Icon(CupertinoIcons.list_bullet),
-        //         onPressed: () => Scaffold.of(context).openDrawer(),
-        //       ),
-        //     ),
-        //   ),
-        //   actions: [
-        //     Padding(
-        //       padding: const EdgeInsets.all(20.0),
-        //       child: IconButton(
-        //         iconSize: 45,
-        //         icon: const Icon(CupertinoIcons.profile_circled),
-        //         onPressed: () {},
-        //       ),
-        //     ),
-        //   ],
-        // ),
-        // drawer: CustomDrawer(),
+        drawer: CustomDrawer(),
+        appBar: routeProvider.currentRoute != "/login" &&
+                routeProvider.currentRoute != "/signup"
+            ? PreferredSize(
+                preferredSize: const Size.fromHeight(120),
+                child: Padding(
+                  padding: const EdgeInsets.fromLTRB(40, 50, 40, 20),
+                  child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Builder(
+                          builder: (context) {
+                            return IconButton(
+                              iconSize: 45,
+                              color: Colors.black,
+                              icon: const Icon(CupertinoIcons.list_bullet),
+                              onPressed: () =>
+                                  Scaffold.of(context).openDrawer(),
+                            );
+                          },
+                        ),
+                        IconButton(
+                          iconSize: 45,
+                          color: Colors.black,
+                          icon: const Icon(CupertinoIcons.profile_circled),
+                          onPressed: () {},
+                        ),
+                      ]),
+                ),
+              )
+            : null,
         body: Column(
           children: [
-            // Row(
-            //   children: [
-            //     Expanded(child: CustomTopNavigator()),
-            //   ],
-            // ),
             Expanded(child: MyApp1()),
             CustomNavBar(),
           ],
