@@ -59,7 +59,7 @@ class MyApp extends StatelessWidget {
           builder: (context, state) {
             final productId = state.pathParameters['id'];
             if (productId == null) {
-              return ErrorPage(message: 'Product ID is missing in the route');
+              return const ErrorPage(message: 'Product ID is missing in the route');
             } else {
               return ProductDetailPage(productId: productId);
             }

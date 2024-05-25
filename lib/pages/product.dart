@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:travelgear/Models/product.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import '../providers/product_provider.dart';
 import '../providers/cart_provider.dart';
-
 
 class ProductDetailPage extends StatelessWidget {
   final String productId;
@@ -15,6 +15,7 @@ class ProductDetailPage extends StatelessWidget {
     final productProvider = Provider.of<ProductsProvider>(context);
     final cartProvider = Provider.of<CartProvider>(context);
     final product = productProvider.getProductById(productId);
+    final user = FirebaseAuth.instance.currentUser;
 
     if (product == null) {
       return Scaffold(
@@ -58,33 +59,63 @@ class ProductDetailPage extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 const Text('Available in stock', style: TextStyle(fontSize: 16)),
-                Text('Rating: ${product.avgRating}'),
+                Text('Rating: ${product.avgRating.toStringAsFixed(1)}'),
               ],
             ),
             const SizedBox(height: 16),
-            // Row(
-            //   children: [
-            //     ...['S', 'M', 'L'].map((size) {
-            //       return Padding(
-            //         padding: const EdgeInsets.symmetric(horizontal: 4.0),
-            //         child: ChoiceChip(
-            //           label: Text(size),
-            //           selected: product.size == size,
-            //           onSelected: (selected) {
-            //             productProvider.updateProductSize(productId, size);
-            //           },
-            //         ),
-            //       );
-            //     }).toList(),
-            //   ],
-            // ),
+            RatingBar.builder(
+              initialRating: 0,
+              minRating: 1,
+              direction: Axis.horizontal,
+              allowHalfRating: true,
+              itemCount: 5,
+              itemBuilder: (context, _) => const Icon(
+                Icons.star,
+                color: Colors.amber,
+              ),
+              onRatingUpdate: (rating) async {
+                if (user != null) {
+                  await productProvider.addRating(productId, user.uid, rating);
+                } else {
+                  // Handle guest rating if necessary
+                }
+              },
+            ),
+            const SizedBox(height: 16),
+            TextField(
+              decoration: InputDecoration(
+                hintText: 'Leave a comment',
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(8.0),
+                ),
+              ),
+              onSubmitted: (comment) async {
+                final userEmail = user?.email ?? 'Guest';
+                await productProvider.addComment(productId, userEmail, comment);
+              },
+            ),
+            const SizedBox(height: 16),
+            Expanded(
+              child: ListView.builder(
+                itemCount: product.comments.length,
+                itemBuilder: (context, index) {
+                  final commentKeys = product.comments.keys.toList();
+                  final commentAuthor = commentKeys[index];
+                  final commentText = product.comments[commentAuthor]!;
+                  return ListTile(
+                    title: Text(commentAuthor),
+                    subtitle: Text(commentText),
+                  );
+                },
+              ),
+            ),
             const Spacer(),
             Row(
               children: [
                 Expanded(
                   child: ElevatedButton(
                     onPressed: () {
-                      cartProvider.addToCart(product as Product);
+                      cartProvider.addToCart(product);
                     },
                     child: const Text('Add to Cart'),
                   ),

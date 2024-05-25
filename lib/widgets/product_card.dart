@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import '../Models/Product.dart';
+import '../Models/product.dart';
 
 class ProductCard extends StatelessWidget {
   final Product product;

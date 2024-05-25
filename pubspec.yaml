@@ -43,6 +43,7 @@ dependencies:
   flutter_hooks: ^0.20.5
 
   provider: any
+  flutter_rating_bar: any
 dev_dependencies:
   flutter_test:
     sdk: flutter

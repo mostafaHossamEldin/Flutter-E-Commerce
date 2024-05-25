@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
-import '../Models/category.dart';
-import '../Models/Product.dart';
-import '../widgets/product_card.dart';
-import '../widgets/category_chip.dart';
-import '../providers/product_provider.dart';
+import 'package:travelgear/Models/product.dart';
+import 'package:travelgear/providers/product_provider.dart';
+import 'package:travelgear/widgets/product_card.dart';
+import 'package:travelgear/widgets/category_chip.dart';
+import 'package:travelgear/Models/category.dart';
+
+
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});

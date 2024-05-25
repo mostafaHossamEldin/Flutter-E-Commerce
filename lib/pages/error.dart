@@ -4,14 +4,14 @@ import 'package:go_router/go_router.dart';
 class ErrorPage extends StatelessWidget {
   final String message;
 
-  const ErrorPage({Key? key, required this.message}) : super(key: key);
+  const ErrorPage({super.key, required this.message});
 
   @override
   Widget build(BuildContext context) {
     Widget content;
 
     if (message == 'not authorised') {
-      content = Center(
+      content = const Center(
         child: Text('You do not have access',
             style: TextStyle(fontSize: 18, color: Colors.red)),
       );
@@ -24,14 +24,14 @@ class ErrorPage extends StatelessWidget {
               onPressed: () {
                 context.go('/login');
               },
-              child: Text('Sign In'),
+              child: const Text('Sign In'),
             ),
-            SizedBox(height: 16),
+            const SizedBox(height: 16),
             ElevatedButton(
               onPressed: () {
                 context.go('/signup');
               },
-              child: Text('Create a New Account'),
+              child: const Text('Create a New Account'),
             ),
           ],
         ),
@@ -41,20 +41,20 @@ class ErrorPage extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Text('The product is no longer in stock',
+            const Text('The product is no longer in stock',
                 style: TextStyle(fontSize: 18)),
-            SizedBox(height: 16),
+            const SizedBox(height: 16),
             ElevatedButton(
               onPressed: () {
                 context.go('/');
               },
-              child: Text('Navigate Back to Home'),
+              child: const Text('Navigate Back to Home'),
             ),
           ],
         ),
       );
     } else {
-      content = Center(
+      content = const Center(
         child: Text('An unknown error occurred',
             style: TextStyle(fontSize: 18, color: Colors.red)),
       );
@@ -62,7 +62,7 @@ class ErrorPage extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text('Error'),
+        title: const Text('Error'),
       ),
       body: content,
     );
