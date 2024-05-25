@@ -11,7 +11,7 @@ import 'widgets/navBarTop.dart';
 
 import 'package:provider/provider.dart';
 import 'providers/routesProvider.dart';
-import 'providers/authProvider.dart';
+import 'providers/userProvider.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import './providers/product_provider.dart';
 
@@ -28,7 +28,7 @@ Future<void> main() async {
   runApp(MultiProvider(
     providers: [
       ChangeNotifierProvider(create: (_) => goRouterProvider),
-      ChangeNotifierProvider(create: (_) => AAProvider()),
+      ChangeNotifierProvider(create: (_) => UserProvider()),
       ChangeNotifierProvider(create: (_) => ProductsProvider()),
     ],
     child: MyApp(),
@@ -46,48 +46,36 @@ class MyApp extends HookWidget {
       debugShowCheckedModeBanner: false,
       title: 'Travel Gear',
       home: Scaffold(
-        appBar: AppBar(
-          leading: Builder(
-            builder: (context) => Padding(
-              padding: const EdgeInsets.all(20.0),
-              child: IconButton(
-                iconSize: 45,
-                icon: const Icon(CupertinoIcons.list_bullet),
-                onPressed: () => Scaffold.of(context).openDrawer(),
-              ),
-            ),
-          ),
-          actions: [
-            Padding(
-              padding: const EdgeInsets.all(20.0),
-              child: IconButton(
-                iconSize: 45,
-                icon: const Icon(CupertinoIcons.profile_circled),
-                onPressed: () {},
-              ),
-            ),
-          ],
-          flexibleSpace: Container(
-            decoration: const BoxDecoration(
-              gradient: LinearGradient(
-                begin: Alignment.topLeft,
-                end: Alignment.bottomRight,
-                colors: [
-                  Color.fromRGBO(38, 53, 110, 1),
-                  Color.fromRGBO(0, 0, 0, 1),
-                ],
-              ),
-            ),
-          ),
-        ),
-        drawer: CustomDrawer(),
+        // appBar: AppBar(
+        //   leading: Builder(
+        //     builder: (context) => Padding(
+        //       padding: const EdgeInsets.all(20.0),
+        //       child: IconButton(
+        //         iconSize: 45,
+        //         icon: const Icon(CupertinoIcons.list_bullet),
+        //         onPressed: () => Scaffold.of(context).openDrawer(),
+        //       ),
+        //     ),
+        //   ),
+        //   actions: [
+        //     Padding(
+        //       padding: const EdgeInsets.all(20.0),
+        //       child: IconButton(
+        //         iconSize: 45,
+        //         icon: const Icon(CupertinoIcons.profile_circled),
+        //         onPressed: () {},
+        //       ),
+        //     ),
+        //   ],
+        // ),
+        // drawer: CustomDrawer(),
         body: Column(
           children: [
-            Row(
-              children: [
-                Expanded(child: CustomTopNavigator()),
-              ],
-            ),
+            // Row(
+            //   children: [
+            //     Expanded(child: CustomTopNavigator()),
+            //   ],
+            // ),
             Expanded(child: MyApp1()),
             CustomNavBar(),
           ],

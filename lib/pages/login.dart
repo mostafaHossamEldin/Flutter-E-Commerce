@@ -11,7 +11,7 @@ import 'package:go_router/go_router.dart';
 import '../user_auth/firebase_auth_services.dart';
 import '../widgets/textfield.dart';
 import '../widgets/primaryButton.dart';
-import '../providers/authProvider.dart';
+import '../providers/userProvider.dart';
 import 'package:provider/provider.dart';
 
 class Login extends HookWidget {
@@ -21,7 +21,7 @@ class Login extends HookWidget {
 
   @override
   Widget build(BuildContext context) {
-    final aaProvider = Provider.of<AAProvider>(context);
+    final userProvider = Provider.of<UserProvider>(context);
     final isLoading = useState(false);
     return Scaffold(
       body: isLoading.value
@@ -110,7 +110,7 @@ class Login extends HookWidget {
                       isValid: (value) {
                         if (value == null ||
                             value.isEmpty ||
-                            value.length < 8) {
+                            value.length < 6) {
                           return false;
                         }
                         return true;
@@ -130,7 +130,7 @@ class Login extends HookWidget {
                             RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$')
                                     .matchAsPrefix(email) ==
                                 null ||
-                            password.length < 8) {
+                            password.length < 6) {
                           ScaffoldMessenger.of(context).showSnackBar(
                             const SnackBar(
                               content: Text('Please fill all fields correctly'),
@@ -140,16 +140,7 @@ class Login extends HookWidget {
                           return;
                         }
                         try {
-                          User? user = await _auth.signInWithEmailAndPassword(
-                              email, password);
-                          if (user != null) {
-                            print('User Logged In!');
-                            aaProvider.login(
-                                user.uid,
-                                user.email,
-                                user.displayName,
-                                user.photoURL,
-                                user.refreshToken);
+                          if (await userProvider.loginUser(email, password)) {
                             // removing dialog
                             context.go('/');
                           } else {

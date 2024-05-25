@@ -11,7 +11,7 @@ import '../widgets/radio.dart';
 import '../user_auth/firebase_auth_services.dart';
 
 import 'package:provider/provider.dart';
-import '../providers/authProvider.dart';
+import '../providers/userProvider.dart';
 
 class SignUp extends HookWidget {
   // Field Controllers
@@ -232,7 +232,7 @@ class SignUp extends HookWidget {
   }
 
   Future<bool> _signUp(context, bool isVendor) async {
-    final aaProvider = Provider.of<AAProvider>(context);
+    final userProvider = Provider.of<UserProvider>(context);
     var username = _usernameController.text;
     var email = _emailController.text;
     var password = _passwordController.text;
@@ -259,19 +259,8 @@ class SignUp extends HookWidget {
       }
     }
     try {
-      User? user = await _auth.signUpWithEmailAndPassword(email, password);
-      if (user != null) {
-        // print('User Successgully Created!');
-        await FirebaseFirestore.instance.collection('users').doc(user.uid).set({
-          'username': username,
-          'email': email,
-          'isVendor': isVendor,
-          'companyName': isVendor ? _companyNameController.text : '',
-        });
-        aaProvider.login(user.uid, user.email, user.displayName, user.photoURL,
-            user.refreshToken);
-        return true;
-      }
+      return await userProvider.signupUser(email, password, username, isVendor,
+          isVendor ? _companyNameController.text : '');
     } catch (e) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(

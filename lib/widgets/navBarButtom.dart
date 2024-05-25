@@ -4,13 +4,14 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 import '../providers/routesProvider.dart';
-import '../providers/authProvider.dart';
+import '../providers/userProvider.dart';
 
 class CustomNavBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final routeProvider = Provider.of<MyGoRouter>(context);
-    final isLoggedIn = Provider.of<AAProvider>(context).isLoggedIn;
+    final isLoggedIn = Provider.of<UserProvider>(context).user.isLoggedIn;
+    final isVendor = Provider.of<UserProvider>(context).user.isVendor;
     final currentRoute = routeProvider.currentRoute;
     var selectedIndex = 0;
     selectedIndex = (currentRoute == '/'
