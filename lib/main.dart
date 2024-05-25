@@ -1,16 +1,17 @@
 import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import './pages/home.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:provider/provider.dart';
+import 'package:travelgear/pages/product.dart';
 
+import 'firebase_options.dart';
 import 'pages/login.dart';
 import 'pages/signUp.dart';
-import 'package:firebase_core/firebase_core.dart';
-import 'firebase_options.dart';
-import './components/navBar.dart';
-
-// ...
+import 'pages/home.dart';
+import 'pages/view_all_page.dart';
+import 'providers/product_provider.dart';
+import 'providers/cart_provider.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -20,41 +21,13 @@ Future<void> main() async {
   runApp(const MyApp());
 }
 
-// void main() {
-//   runApp(const MyApp());
-// }
-
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Travel Gear',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
-      home: Scaffold(
-        body: Column(
-          children: [
-            Expanded(child: MyApp1()),
-            CustomNavBar(
-              selectedIndex: 0,
-              onItemTapped: (p) {},
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-}
-
-class MyApp1 extends StatelessWidget {
-  const MyApp1({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final _router = GoRouter(
-      initialLocation: '/login', // Set initial route to login page
+    final router = GoRouter(
+      initialLocation: '/',
       routes: [
         GoRoute(
           name: 'login',
@@ -69,13 +42,37 @@ class MyApp1 extends StatelessWidget {
         GoRoute(
           name: 'home',
           path: '/',
-          builder: (context, state) => Home(),
+          builder: (context, state) => const HomePage(),
         ),
+        GoRoute(
+            path: '/view-all',
+            builder: (context, state) {
+              final extra = state.extra as Map<String, dynamic>;
+              return ViewAllPage(
+                products: extra['products'],
+                title: extra['title'],
+              );
+            }),
+        // GoRoute(
+        //   path: '/product/:id',
+        //   builder: (context, state) {
+        //     final productId = state.pathParameters['id'];
+        //     return ProductDetailPage(productId: productId);
+        //   },
+        // ),
       ],
     );
-    return MaterialApp.router(
-      routerConfig: _router,
-      title: 'Travel Gear',
+
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (_) => ProductsProvider()),
+        //ChangeNotifierProvider(create: (_) => VendorProvider()),
+        ChangeNotifierProvider(create: (_) => CartProvider()),
+      ],
+      child: MaterialApp.router(
+        routerConfig: router,
+        title: 'Travel Gear',
+      ),
     );
   }
 }
