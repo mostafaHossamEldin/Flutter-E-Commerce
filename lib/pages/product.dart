@@ -77,7 +77,19 @@ class ProductDetailPage extends StatelessWidget {
                 if (user != null) {
                   await productProvider.addRating(productId, user.uid, rating);
                 } else {
-                  // Handle guest rating if necessary
+                  showDialog(
+                    context: context,
+                    builder: (context) => AlertDialog(
+                      title: const Text('Login Required'),
+                      content: const Text('Please log in to rate this product.'),
+                      actions: [
+                        TextButton(
+                          onPressed: () => Navigator.of(context).pop(),
+                          child: const Text('OK'),
+                        ),
+                      ],
+                    ),
+                  );
                 }
               },
             ),

@@ -33,7 +33,8 @@ class ProductsProvider with ChangeNotifier {
   Future<void> addComment(String productId, String userId, String comment) async {
     final product = getProductById(productId);
     if (product != null) {
-      product.comments[userId] = comment;
+      // Append new comment if user already commented
+      product.comments.update(userId, (existingComment) => '$existingComment\n$comment', ifAbsent: () => comment);
       await FirebaseFirestore.instance.collection('products').doc(productId).update({
         'comments': product.comments,
       });
