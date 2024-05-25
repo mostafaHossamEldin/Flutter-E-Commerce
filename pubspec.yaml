@@ -1,4 +1,4 @@
-name: projectt2
+name: travelgear
 description: "A new Flutter project."
 # The following line prevents the package from being accidentally published to
 # pub.dev using `flutter pub publish`. This is preferred for private packages.
@@ -30,17 +30,23 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  firebase_messaging: 14.9.2
+
+
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.6
-  go_router: ^14.1.1
-  firebase_core: ^2.31.0
-  firebase_auth: ^4.19.5
-  cloud_firestore: ^4.17.3
+  go_router: ^14.1.3
+  firebase_core: ^2.31.1
+  firebase_auth: ^4.19.6
   google_fonts: ^6.2.1
+  cloud_firestore: ^4.17.4
+  flutter_hooks: ^0.20.5
+  firebase_messaging: ^14.9.3
 
   provider: any
+  flutter_rating_bar: any
+  firebase_storage: ^11.7.6
+  image_picker: ^1.1.1
 dev_dependencies:
   flutter_test:
     sdk: flutter
@@ -57,7 +63,13 @@ dev_dependencies:
 
 # The following section is specific to Flutter packages.
 flutter:
-
+  assets:
+    - assets/fonts/
+  fonts:
+    - family: CustomFont
+      fonts:
+        - asset: assets/fonts/JacquesFrancois-Regular.ttf
+          weight: 700
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in
   # the material Icons class.

@@ -1,13 +1,13 @@
 // view_all_page.dart
 import 'package:flutter/material.dart';
-import '../Models/Product.dart';
+import '../Models/product.dart';
 import '../widgets/product_card.dart';
 
 class ViewAllPage extends StatefulWidget {
   final List<Product> products;
   final String title;
 
-  ViewAllPage({required this.products, required this.title});
+  const ViewAllPage({super.key, required this.products, required this.title});
 
   @override
   _ViewAllPageState createState() => _ViewAllPageState();
@@ -42,18 +42,18 @@ class _ViewAllPageState extends State<ViewAllPage> {
               children: [
                 DropdownButton<String>(
                   value: selectedCategory,
-                  hint: Text('Select Category'),
+                  hint: const Text('Select Category'),
                   items: [
-                    DropdownMenuItem(
-                      child: Text('All'),
+                    const DropdownMenuItem(
                       value: null,
+                      child: Text('All'),
                     ),
                     ...['Suitcases', 'Carry Bags', 'Sleep Pads'].map((category) {
                       return DropdownMenuItem(
-                        child: Text(category),
                         value: category,
+                        child: Text(category),
                       );
-                    }).toList(),
+                    }),
                   ],
                   onChanged: (value) {
                     setState(() {
@@ -63,14 +63,14 @@ class _ViewAllPageState extends State<ViewAllPage> {
                 ),
                 DropdownButton<String>(
                   value: sortOption,
-                  items: [
+                  items: const [
                     DropdownMenuItem(
-                      child: Text('Price: Low to High'),
                       value: 'Price: Low to High',
+                      child: Text('Price: Low to High'),
                     ),
                     DropdownMenuItem(
-                      child: Text('Price: High to Low'),
                       value: 'Price: High to Low',
+                      child: Text('Price: High to Low'),
                     ),
                   ],
                   onChanged: (value) {
@@ -84,7 +84,7 @@ class _ViewAllPageState extends State<ViewAllPage> {
           ),
           Expanded(
             child: GridView.builder(
-              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                 crossAxisCount: 2,
                 childAspectRatio: 3 / 4,
               ),

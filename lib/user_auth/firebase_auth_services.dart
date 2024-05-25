@@ -31,4 +31,14 @@ class FirebaseAuthServices{
     }
     return null;
   }
+
+   Future<String?> getToken(User user) async {
+    try {
+      String? token = await user.getIdToken();
+      return token;
+    } catch (e) {
+      print("Some error occurred while getting the token: $e");
+    }
+    return null;
+  }
 }
