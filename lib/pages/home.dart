@@ -7,6 +7,7 @@ import '../widgets/product_card.dart';
 import '../widgets/category_chip.dart';
 import '../providers/product_provider.dart';
 import 'view_all_page.dart';
+import '../widgets/topNavigator.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -50,13 +51,8 @@ class _HomePageState extends State<HomePage> {
     final allProducts = products;
 
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Explore the Travel Gear'),
-        backgroundColor: Colors.white,
-        elevation: 0,
-      ),
       body: Padding(
-        padding: const EdgeInsets.all(16.0),
+        padding: const EdgeInsets.fromLTRB(16, 0, 16, 16),
         child: SingleChildScrollView(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
