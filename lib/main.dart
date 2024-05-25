@@ -5,11 +5,9 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:provider/provider.dart';
 import 'package:travelgear/pages/error.dart';
 import 'package:travelgear/pages/product.dart';
-
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:travelgear/pages/vendor_product_details.dart';
 import 'package:travelgear/providers/vendor_product_provider.dart';
-
 import 'firebase_options.dart';
 import 'pages/login.dart';
 import 'pages/signUp.dart';
@@ -35,7 +33,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final router = GoRouter(
-      initialLocation: '/vendor-product',
+      initialLocation: '/vendor-product/vFMSInN3vKBlLzUIfzzX',
       routes: [
         GoRoute(
           name: 'login',

@@ -18,40 +18,36 @@ class VendorProductDetailPage extends StatefulWidget {
 
 class _VendorProductDetailPageState extends State<VendorProductDetailPage> {
   final _formKey = GlobalKey<FormState>();
-  late String _name;
-  late String _category;
-  late double _price;
-  late int _quantity;
-  late String _description;
+  String _name = '';
+  String _category = 'Suitcases';
+  double _price = 0.0;
+  int _quantity = 0;
+  String _description = '';
   File? _imageFile;
-  late bool _isDiscounted;
-  late double _discountPercentage;
+  bool _isDiscounted = false;
+  double _discountPercentage = 0.0;
   bool _isLoading = false;
 
   @override
   void initState() {
     super.initState();
-    if (widget.productId != null) {
-      final product = Provider.of<VendorProductProvider>(context, listen: false)
-          .getProductById(widget.productId!);
-      if (product != null) {
-        _name = product.name;
-        _category = product.category;
-        _price = product.price;
-        _quantity = product.quantity;
-        _description = product.description;
-        _isDiscounted = product.isDiscounted;
-        _discountPercentage = product.discountPercentage;
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (widget.productId != null) {
+        final product = Provider.of<VendorProductProvider>(context, listen: false)
+            .getProductById(widget.productId!);
+        if (product != null) {
+          setState(() {
+            _name = product.name;
+            _category = product.category;
+            _price = product.price;
+            _quantity = product.quantity;
+            _description = product.description;
+            _isDiscounted = product.isDiscounted;
+            _discountPercentage = product.discountPercentage;
+          });
+        }
       }
-    } else {
-      _name = '';
-      _category = 'Suitcases';
-      _price = 0.0;
-      _quantity = 0;
-      _description = '';
-      _isDiscounted = false;
-      _discountPercentage = 0.0;
-    }
+    });
   }
 
   Future<void> _pickImage() async {
@@ -62,16 +58,23 @@ class _VendorProductDetailPageState extends State<VendorProductDetailPage> {
       setState(() {
         _imageFile = File(pickedFile.path);
       });
+    } else {
+      _showErrorDialog('No image selected.');
     }
   }
 
   Future<String> _uploadImage() async {
     if (_imageFile == null) return '';
-    final storageRef = FirebaseStorage.instance
-        .ref()
-        .child('product_images/${DateTime.now().millisecondsSinceEpoch}.jpg');
-    await storageRef.putFile(_imageFile!);
-    return await storageRef.getDownloadURL();
+    try {
+      final storageRef = FirebaseStorage.instance
+          .ref()
+          .child('product_images/${DateTime.now().millisecondsSinceEpoch}.jpg');
+      await storageRef.putFile(_imageFile!);
+      return await storageRef.getDownloadURL();
+    } catch (error) {
+      _showErrorDialog('An error occurred while uploading the image.');
+      rethrow;
+    }
   }
 
   Future<void> _saveProduct() async {
@@ -154,7 +157,7 @@ class _VendorProductDetailPageState extends State<VendorProductDetailPage> {
         title: Text(widget.productId != null ? 'Edit Product' : 'Add Product'),
       ),
       body: _isLoading
-          ? Center(child: CircularProgressIndicator())
+          ? const Center(child: CircularProgressIndicator())
           : Padding(
               padding: const EdgeInsets.all(16.0),
               child: Form(
@@ -200,8 +203,8 @@ class _VendorProductDetailPageState extends State<VendorProductDetailPage> {
                         if (value == null || value.isEmpty) {
                           return 'Please enter product price';
                         }
-                        if (double.tryParse(value) == null || double.parse(value) < 0) {
-                          return 'Please enter a valid price';
+                        if (double.tryParse(value) == null || double.parse(value) <= 0) {
+                          return 'Please enter a valid price greater than 0';
                         }
                         return null;
                       },
@@ -217,8 +220,8 @@ class _VendorProductDetailPageState extends State<VendorProductDetailPage> {
                         if (value == null || value.isEmpty) {
                           return 'Please enter product quantity';
                         }
-                        if (int.tryParse(value) == null || int.parse(value) < 0) {
-                          return 'Please enter a valid quantity';
+                        if (int.tryParse(value) == null || int.parse(value) <= 0) {
+                          return 'Please enter a valid quantity greater than 0';
                         }
                         return null;
                       },
@@ -279,9 +282,7 @@ class _VendorProductDetailPageState extends State<VendorProductDetailPage> {
                     ),
                     const SizedBox(height: 20),
                     ElevatedButton(
-                      onPressed: () {
-                        _saveProduct();
-                      },
+                      onPressed: _saveProduct,
                       child: Text(widget.productId != null
                           ? 'Update Product'
                           : 'Add Product'),
