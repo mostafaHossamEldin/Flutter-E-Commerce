@@ -17,7 +17,7 @@ class ProductDetailPage extends StatefulWidget {
 
 class _ProductDetailPageState extends State<ProductDetailPage> {
   int quantity = 1;
-  double userRating = 0.0;
+  
 
 
   @override
@@ -31,6 +31,8 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
     final cartProvider = Provider.of<CartProvider>(context);
     final product = productProvider.getProductById(widget.productId);
     final user = FirebaseAuth.instance.currentUser;
+    //if the user is not logged in, the userRating will be 0, else it will be the rating of the user if he has rated the product before
+    double userRating = user != null ? product?.ratings[user.uid] ?? 0 : 0;
 
     if (product == null) {
       return Scaffold(
