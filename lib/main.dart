@@ -7,8 +7,9 @@ import 'package:go_router/go_router.dart';
 import 'firebase_options.dart';
 import 'widgets/navBar.dart';
 
-import 'providers/routesProvider.dart';
 import 'package:provider/provider.dart';
+import 'providers/routesProvider.dart';
+import 'providers/authProvider.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 // ...
 
@@ -21,6 +22,7 @@ Future<void> main() async {
   runApp(MultiProvider(
     providers: [
       ChangeNotifierProvider(create: (_) => goRouterProvider),
+      ChangeNotifierProvider(create: (_) => AAProvider()),
     ],
     child: MyApp(),
   ));

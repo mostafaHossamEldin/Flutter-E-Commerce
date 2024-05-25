@@ -9,6 +9,9 @@ import '../widgets/textfield.dart';
 
 import '../user_auth/firebase_auth_services.dart';
 
+import 'package:provider/provider.dart';
+import '../providers/authProvider.dart';
+
 class SignUp extends StatelessWidget {
   // Field Controllers
   final TextEditingController _usernameController = TextEditingController();
@@ -182,6 +185,7 @@ class SignUp extends StatelessWidget {
   }
 
   Future<bool> _signUp(context) async {
+    final aaProvider = Provider.of<AAProvider>(context);
     var username = _usernameController.text;
     var email = _emailController.text;
     var password = _passwordController.text;
@@ -215,6 +219,8 @@ class SignUp extends StatelessWidget {
           'username': username,
           'email': email,
         });
+        aaProvider.login(user.uid, user.email, user.displayName, user.photoURL,
+            user.refreshToken);
         return true;
       }
     } catch (e) {

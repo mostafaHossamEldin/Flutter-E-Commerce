@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
 import 'dart:ui';
 
 import 'package:go_router/go_router.dart';
@@ -8,6 +9,8 @@ import 'package:go_router/go_router.dart';
 import '../user_auth/firebase_auth_services.dart';
 import '../widgets/textfield.dart';
 import '../widgets/primaryButton.dart';
+import '../providers/authProvider.dart';
+import 'package:provider/provider.dart';
 
 class Login extends StatelessWidget {
   final TextEditingController _emailController = TextEditingController();
@@ -16,6 +19,7 @@ class Login extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final aaProvider = Provider.of<AAProvider>(context);
     return Scaffold(
       body: Container(
         padding: EdgeInsets.fromLTRB(26, 33, 26, 0),
@@ -137,6 +141,8 @@ class Login extends StatelessWidget {
                         await _auth.signInWithEmailAndPassword(email, password);
                     if (user != null) {
                       print('User Logged In!');
+                      aaProvider.login(user.uid, user.email, user.displayName,
+                          user.photoURL, user.refreshToken);
                       context.goNamed('home');
                     } else {
                       ScaffoldMessenger.of(context).showSnackBar(
