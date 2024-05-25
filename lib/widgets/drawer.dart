@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-class CustomDrawer extends AppBar {
+class CustomDrawer extends StatelessWidget {
   // final Function(String) onNavigate;
   // final Function() onLogout;
 
@@ -13,50 +13,48 @@ class CustomDrawer extends AppBar {
   Widget build(BuildContext context) {
     return Drawer(
       child: ListView(
-        padding: EdgeInsets.zero,
-        children: <Widget>[
+        children: [
           const DrawerHeader(
             decoration: BoxDecoration(
               color: Color.fromRGBO(38, 53, 110, 1),
             ),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  'Travel',
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 24,
-                  ),
-                ),
-                Text(
-                  'Gear',
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 24,
-                  ),
-                ),
-              ],
+            child: Text(
+              'Menu',
+              style: TextStyle(
+                color: Colors.white,
+                fontSize: 24,
+              ),
             ),
           ),
           ListTile(
             title: const Text('Home'),
-            onTap: () {},
+            onTap: () {
+              // onNavigate('/');
+            },
           ),
           ListTile(
             title: const Text('Cart'),
-            onTap: () {},
+            onTap: () {
+              // onNavigate('/cart');
+            },
           ),
           ListTile(
             title: const Text('Notifications'),
-            onTap: () {},
+            onTap: () {
+              // onNavigate('/notifications');
+            },
           ),
           ListTile(
             title: const Text('Profile'),
-            onTap: () {},
+            onTap: () {
+              // onNavigate('/profile');
+            },
           ),
           ListTile(
             title: const Text('Logout'),
+            onTap: () {
+              // onLogout();
+            },
           ),
         ],
       ),

@@ -1,18 +1,21 @@
 import 'dart:async';
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:go_router/go_router.dart';
 import 'firebase_options.dart';
-import 'widgets/navBar.dart';
-import 'widgets/topNavigator.dart';
+import 'widgets/navBarButtom.dart';
+import 'widgets/navBarTop.dart';
 
 import 'package:provider/provider.dart';
 import 'providers/routesProvider.dart';
 import 'providers/authProvider.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import './providers/product_provider.dart';
+
+import './widgets/drawer.dart';
 
 // ...
 
@@ -42,10 +45,42 @@ class MyApp extends HookWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Travel Gear',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
       home: Scaffold(
+        appBar: AppBar(
+          leading: Builder(
+            builder: (context) => Padding(
+              padding: const EdgeInsets.all(20.0),
+              child: IconButton(
+                iconSize: 45,
+                icon: const Icon(CupertinoIcons.list_bullet),
+                onPressed: () => Scaffold.of(context).openDrawer(),
+              ),
+            ),
+          ),
+          actions: [
+            Padding(
+              padding: const EdgeInsets.all(20.0),
+              child: IconButton(
+                iconSize: 45,
+                icon: const Icon(CupertinoIcons.profile_circled),
+                onPressed: () {},
+              ),
+            ),
+          ],
+          flexibleSpace: Container(
+            decoration: const BoxDecoration(
+              gradient: LinearGradient(
+                begin: Alignment.topLeft,
+                end: Alignment.bottomRight,
+                colors: [
+                  Color.fromRGBO(38, 53, 110, 1),
+                  Color.fromRGBO(0, 0, 0, 1),
+                ],
+              ),
+            ),
+          ),
+        ),
+        drawer: CustomDrawer(),
         body: Column(
           children: [
             Row(

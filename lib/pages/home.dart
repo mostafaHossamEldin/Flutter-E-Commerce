@@ -7,7 +7,7 @@ import '../widgets/product_card.dart';
 import '../widgets/category_chip.dart';
 import '../providers/product_provider.dart';
 import 'view_all_page.dart';
-import '../widgets/topNavigator.dart';
+import '../widgets/navBarTop.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);

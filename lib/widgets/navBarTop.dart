@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import './drawer.dart';
+import 'package:flutter/cupertino.dart';
 
 class CustomTopNavigator extends StatelessWidget {
   @override
@@ -16,7 +17,10 @@ class CustomTopNavigator extends StatelessWidget {
                 children: [
                   IconButton(
                     iconSize: 45,
-                    onPressed: () {},
+                    onPressed: () {
+                      builder:
+                      (context) => CustomDrawer();
+                    },
                     icon: const Icon(
                       CupertinoIcons.list_bullet,
                       color: Color.fromARGB(255, 0, 0, 0),
@@ -24,14 +28,7 @@ class CustomTopNavigator extends StatelessWidget {
                   ),
                   IconButton(
                     iconSize: 45,
-                    onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => CustomDrawer(),
-                        ),
-                      );
-                    },
+                    onPressed: () {},
                     icon: const Icon(
                       CupertinoIcons.profile_circled,
                       color: Color.fromARGB(255, 0, 0, 0),
