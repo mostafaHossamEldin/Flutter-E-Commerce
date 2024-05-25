@@ -26,6 +26,30 @@ Future<void> main() async {
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      title: 'Travel Gear',
+      theme: ThemeData(
+        primarySwatch: Colors.blue,
+      ),
+      home: Scaffold(
+        body: Column(
+          children: [
+            Expanded(child: MyApp1()),
+            CustomNavBar(
+              selectedIndex: 0,
+              onItemTapped: (p) {},
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class MyApp1 extends StatelessWidget {
+  const MyApp1({super.key});
 
   @override
   Widget build(BuildContext context) {

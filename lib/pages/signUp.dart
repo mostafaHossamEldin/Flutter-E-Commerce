@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import 'dart:ui';
 import 'package:flutter/gestures.dart';
 import 'package:go_router/go_router.dart';
+import '../components/primaryButton.dart';
+import '../components/textfield.dart';
 
 import '../user_auth/firebase_auth_services.dart';
 
@@ -38,278 +40,143 @@ class SignUp extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Container(
-                  margin: EdgeInsets.fromLTRB(0, 0, 0, 50),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Column(
-                        children: [
-                          Text(
-                            'Travel Gear',
-                            style: TextStyle(
-                              fontWeight: FontWeight.w400,
-                              fontSize: 40,
-                              height: 1.3,
-                              color: Color(0xFF1C1C1C),
-                            ),
-                          ),
-                          Text(
-                            'My Life My Gadget',
-                            style: TextStyle(
-                              fontWeight: FontWeight.w400,
-                              fontSize: 14,
-                              color: Color(0xFF1C1C1C),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ],
-                  ),
-                ),
-                Container(
-                  margin: EdgeInsets.fromLTRB(0, 0, 0, 50),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        'Signup!',
-                        style: TextStyle(
-                          fontWeight: FontWeight.w700,
-                          fontSize: 24,
-                          color: Color(0xFF1C1C1C),
-                        ),
-                      ),
-                      Text(
-                        'Become a part of our community!',
-                        style: TextStyle(
-                          fontWeight: FontWeight.w400,
-                          fontSize: 15,
-                          color: Color(0xFF747474),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-                Container(
-                  margin: EdgeInsets.fromLTRB(26, 0, 36, 21),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Align(
-                        alignment: Alignment.topLeft,
-                        child: Text(
-                          'Username',
+                const Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Column(
+                      children: [
+                        Text(
+                          'Travel Gear',
                           style: TextStyle(
-                            fontWeight: FontWeight.w700,
-                            fontSize: 20,
+                            fontFamily: 'CustomFont',
+                            fontWeight: FontWeight.w400,
+                            fontSize: 40,
+                            height: 1.3,
                             color: Color(0xFF1C1C1C),
                           ),
                         ),
-                      ),
-                      TextField(
-                        controller: _usernameController,
-                        decoration: InputDecoration(
-                            hintText: "Jackie_Dandoon",
-                            border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(18),
-                                borderSide: BorderSide.none),
-                            prefixIcon: const Icon(Icons.person_outline)),
-                      ),
-                    ],
-                  ),
-                ),
-                Container(
-                  margin: EdgeInsets.fromLTRB(26, 0, 36, 21),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Align(
-                        alignment: Alignment.topLeft,
-                        child: Text(
-                          'Email',
+                        Text(
+                          'My Life My Gadget',
                           style: TextStyle(
-                            fontWeight: FontWeight.w700,
-                            fontSize: 20,
+                            fontFamily: 'CustomFont',
+                            fontWeight: FontWeight.w400,
+                            fontSize: 14,
                             color: Color(0xFF1C1C1C),
                           ),
                         ),
-                      ),
-                      TextField(
-                        controller: _emailController,
-                        decoration: InputDecoration(
-                            hintText: "JackDanial@google.com",
-                            border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(18),
-                                borderSide: BorderSide.none),
-                            prefixIcon: const Icon(Icons.email_outlined)),
-                      ),
-                    ],
-                  ),
+                      ],
+                    ),
+                  ],
                 ),
-                Container(
-                  margin: EdgeInsets.fromLTRB(26, 0, 36, 21),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Align(
-                        alignment: Alignment.topLeft,
-                        child: Text(
-                          'Password',
-                          style: TextStyle(
-                            fontWeight: FontWeight.w700,
-                            fontSize: 20,
-                            color: Color(0xFF1C1C1C),
-                          ),
-                        ),
+                const SizedBox(height: 70),
+                const Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      'Signup!',
+                      style: TextStyle(
+                        fontWeight: FontWeight.w700,
+                        fontSize: 24,
+                        color: Color(0xFF1C1C1C),
                       ),
-                      TextField(
-                        controller: _passwordController,
-                        decoration: InputDecoration(
-                          hintText: "123qwe",
-                          border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(18),
-                              borderSide: BorderSide.none),
-                          prefixIcon: const Icon(Icons.password),
-                        ),
-                        obscureText: true,
+                    ),
+                    Text(
+                      'Become a part of our community!',
+                      style: TextStyle(
+                        fontWeight: FontWeight.w400,
+                        fontSize: 15,
+                        color: Color(0xFF747474),
                       ),
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
-                Container(
-                  margin: EdgeInsets.fromLTRB(26, 0, 36, 10),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Align(
-                        alignment: Alignment.topLeft,
-                        child: Text(
-                          'Confirm Password',
-                          style: TextStyle(
-                            fontWeight: FontWeight.w700,
-                            fontSize: 20,
-                            color: Color(0xFF1C1C1C),
-                          ),
+                const SizedBox(height: 40),
+                CustomTextfield(
+                    fieldName: "Username",
+                    hintText: "Jack Danial ",
+                    isPassword: false,
+                    controller: _usernameController,
+                    isValid: (value) {
+                      return value!.length > 3 && value.length < 20;
+                    }),
+                const SizedBox(height: 40),
+                CustomTextfield(
+                    fieldName: "Email",
+                    hintText: "JackDanial@google.com",
+                    isPassword: false,
+                    controller: _emailController,
+                    isValid: (value) {
+                      return RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$')
+                              .matchAsPrefix(value.toString()) !=
+                          null;
+                    }),
+                const SizedBox(height: 40),
+                CustomTextfield(
+                    fieldName: "Password",
+                    hintText: "1234qwer",
+                    isPassword: true,
+                    controller: _passwordController,
+                    isValid: (value) {
+                      return value!.length >= 8 && value.length < 20;
+                    }),
+                const SizedBox(height: 40),
+                CustomTextfield(
+                    fieldName: "Confirm Password",
+                    hintText: "1234qwer",
+                    isPassword: true,
+                    controller: _confirmPasswordController,
+                    isValid: (value) {
+                      return value == _passwordController.text;
+                    }),
+                const SizedBox(height: 40),
+                CustomPrimaryButton(
+                  text: "Sign Up",
+                  height: 50,
+                  width: double.infinity,
+                  onPressed: () async {
+                    if (await _signUp(context)) {
+                      context.goNamed('home');
+                    } else {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                          content: Text('Some error occured while signing up'),
                         ),
-                      ),
-                      TextField(
-                        controller: _confirmPasswordController,
-                        decoration: InputDecoration(
-                          hintText: "123qwe",
-                          border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(18),
-                              borderSide: BorderSide.none),
-                          prefixIcon: const Icon(Icons.password_sharp),
-                        ),
-                        obscureText: true,
-                      ),
-                    ],
-                  ),
-                ),
-                Container(
-                  margin: EdgeInsets.fromLTRB(26, 0, 26, 0),
-                  child: ElevatedButton(
-                    onPressed: () async {
-                      // show circular progress indicator
-                      showDialog(
-                        context: context,
-                        barrierDismissible: false,
-                        builder: (BuildContext context) {
-                          return Center(
-                            child: CircularProgressIndicator(),
-                          );
-                        },
                       );
-                      bool state = await _signUp(context);
-                      if (state) {
-                        context.goNamed('home');
-                      }
-                      // hide circular progress indicator
-                      Navigator.of(context).pop();
-                    },
-                    child: Align(
-                      alignment: Alignment.center,
-                      child: Container(
-                        padding: EdgeInsets.fromLTRB(0, 13.5, 0, 13.5),
-                        child: Text(
-                          'Sign up',
-                          style: TextStyle(
-                            fontWeight: FontWeight.w700,
-                            fontSize: 16,
-                            color: Color(0xFFFFFFFF),
-                          ),
-                        ),
-                      ),
-                    ),
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Color(0xFF26356E),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(50),
-                      ),
-                    ),
-                  ),
+                    }
+                  },
                 ),
-                Container(
-                  margin: EdgeInsets.fromLTRB(26, 0, 26, 57),
-                  child: Align(
-                    alignment: Alignment.topLeft,
-                    child: RichText(
-                      text: TextSpan(
-                        text: 'Already have an account? ',
+                const SizedBox(height: 10),
+                RichText(
+                  text: TextSpan(
+                    text: 'Already have an account? ',
+                    style: TextStyle(
+                      fontWeight: FontWeight.w400,
+                      fontSize: 15,
+                      color: Color(0xFF747474),
+                    ),
+                    children: [
+                      TextSpan(
+                        text: 'Login',
                         style: TextStyle(
                           fontWeight: FontWeight.w400,
                           fontSize: 15,
-                          color: Color(0xFF747474),
+                          height: 1.3,
+                          color: Color(0xFF3C99DD),
                         ),
-                        children: [
-                          TextSpan(
-                            text: 'Login',
-                            style: TextStyle(
-                              fontWeight: FontWeight.w400,
-                              fontSize: 15,
-                              height: 1.3,
-                              color: Color(0xFF3C99DD),
-                            ),
-                            recognizer: TapGestureRecognizer()
-                              ..onTap = () {
-                                // Navigate to login page
-                                context.goNamed('login');
-                              },
-                          ),
-                        ],
+                        recognizer: TapGestureRecognizer()
+                          ..onTap = () {
+                            // Navigate to login page
+                            context.goNamed('login');
+                          },
                       ),
-                    ),
+                    ],
                   ),
                 ),
               ],
             ),
           ),
         ),
-      ),
-      bottomNavigationBar: BottomNavigationBar(
-        items: const <BottomNavigationBarItem>[
-          BottomNavigationBarItem(
-            icon: Icon(Icons.home),
-            label: 'Home',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.search),
-            label: 'Search',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.person),
-            label: 'Profile',
-          ),
-        ],
-        // currentIndex: _selectedIndex,
-        selectedItemColor: Colors.blue,
-        // onTap: _onItemTapped,
       ),
     );
   }
