@@ -29,30 +29,37 @@ class MyGoRouter extends ChangeNotifier {
       initialLocation: _currentRoute,
       routes: [
         GoRoute(
+          name:"home",
           path: '/',
           builder: (context, state) => const HomePage(),
         ),
         GoRoute(
+          name:"cart",
           path: '/cart',
           builder: (context, state) => const HomePage(),
         ),
         GoRoute(
+          name:"notifications",
           path: '/notifications',
           builder: (context, state) => const HomePage(),
         ),
         GoRoute(
+          name:"profile",
           path: '/profile',
           builder: (context, state) => const HomePage(),
         ),
         GoRoute(
+          name:"login",
           path: '/login',
           builder: (context, state) => Login(),
         ),
         GoRoute(
+          name:"signup",
           path: '/signup',
           builder: (context, state) => SignUp(),
         ),
         GoRoute(
+          name:"view-all",
             path: '/view-all',
             builder: (context, state) {
               final extra = state.extra as Map<String, dynamic>;

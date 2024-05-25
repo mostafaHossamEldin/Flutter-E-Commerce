@@ -24,7 +24,9 @@ class UserProvider extends ChangeNotifier {
 
   Future<bool> signupUser(
       email, password, username, isVendor, companyName) async {
+    print("Email: $email, Password: $password, Username: $username");
     var user = await _auth.signUpWithEmailAndPassword(email, password);
+    print("User: $user");
     if (user != null) {
       await FirebaseFirestore.instance.collection('users').doc(user.uid).set({
         'username': username,
@@ -60,19 +62,26 @@ class UserProvider extends ChangeNotifier {
           .doc(user.uid)
           .get();
 
+      print("Hey papa");
+      print(userData.data());
+      final Map<String, dynamic> data = userData.data() as Map<String, dynamic>;
+
       _user = Userdb(
         isLoggedIn: true,
         uid: user.uid,
         email: email,
-        displayName: userData['username'] ?? '',
-        isVendor: userData['isVendor'] ?? false,
-        cart: userData['cart'] ?? {},
-        companyName: userData['companyName'] ?? '',
-        gender: userData['gender'] ?? 0,
-        profilePicture: userData['profilePicture'] ?? '',
-        favorites: userData['favorites'] ?? [],
-        addresses: userData['addresses'] ?? [],
+        displayName: data['username'] ?? '',
+        isVendor: data['isVendor'] ?? false,
+        cart: data.containsKey('cart') ? data['cart'] : {},
+        companyName: data['companyName'] ?? '',
+        gender: data.containsKey('gender') ? data['gender'] : 0,
+        profilePicture:
+            data.containsKey('profilePicture') ? data['profilePicture'] : Image.asset('assets/images/profile.png'),
+        favorites: data.containsKey('favorites') ? data['favorites'] : [],
+        addresses: data.containsKey('addresses') ? data['addresses'] : [],
       );
+
+      print("Dont worry papa");
       notifyListeners();
       return true;
     }

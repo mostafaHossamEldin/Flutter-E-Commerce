@@ -22,6 +22,7 @@ class SignUp extends HookWidget {
       TextEditingController();
   final TextEditingController _companyNameController = TextEditingController();
   final FirebaseAuthServices _auth = FirebaseAuthServices();
+  var _isVendor = false;
 
   // @override
   // void dispose() {
@@ -142,7 +143,7 @@ class SignUp extends HookWidget {
                             return value == _passwordController.text;
                           }),
                       const SizedBox(height: 40),
-                      if (isVendor.value)
+                      if (_isVendor)
                         CustomTextfield(
                             fieldName: "Company Name",
                             hintText: "El shazly",
@@ -151,12 +152,12 @@ class SignUp extends HookWidget {
                             isValid: (p) {
                               return p!.length > 3 && p.length < 20;
                             }),
-                      if (isVendor.value) const SizedBox(height: 40),
+                      if (_isVendor) const SizedBox(height: 40),
                       CustomRadio(
                         text: "Signup us a Vendor",
                         defaultValue: false,
                         controller: (value) {
-                          isVendor.value = value;
+                          _isVendor = value;
                         },
                       ),
                       const SizedBox(height: 40),
@@ -168,12 +169,13 @@ class SignUp extends HookWidget {
                           isLoading.value = true;
                           var email = _emailController.text;
                           var password = _passwordController.text;
+
                           if (email.isEmpty ||
                               password.isEmpty ||
                               RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$')
                                       .matchAsPrefix(email) ==
                                   null ||
-                              password.length < 8) {
+                              password.length < 6) {
                             ScaffoldMessenger.of(context).showSnackBar(
                               const SnackBar(
                                 content:
@@ -183,7 +185,7 @@ class SignUp extends HookWidget {
                             isLoading.value = false;
                             return;
                           }
-                          if (await _signUp(context, isVendor.value)) {
+                          if (await _signUp(context, _isVendor)) {
                             context.go('/');
                           } else {
                             ScaffoldMessenger.of(context).showSnackBar(
@@ -232,22 +234,11 @@ class SignUp extends HookWidget {
   }
 
   Future<bool> _signUp(context, bool isVendor) async {
-    final userProvider = Provider.of<UserProvider>(context);
+    final userProvider = Provider.of<UserProvider>(context, listen: false);
     var username = _usernameController.text;
     var email = _emailController.text;
     var password = _passwordController.text;
     var confirmPassword = _confirmPasswordController.text;
-    if (username.isEmpty ||
-        email.isEmpty ||
-        password.isEmpty ||
-        confirmPassword.isEmpty) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text('Please fill all fields'),
-        ),
-      );
-      return false;
-    }
     if (password != confirmPassword) {
       if (password != confirmPassword) {
         ScaffoldMessenger.of(context).showSnackBar(

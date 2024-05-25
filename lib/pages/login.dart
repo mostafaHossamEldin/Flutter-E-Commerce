@@ -21,7 +21,7 @@ class Login extends HookWidget {
 
   @override
   Widget build(BuildContext context) {
-    final userProvider = Provider.of<UserProvider>(context);
+    final userProvider = Provider.of<UserProvider>(context, listen: false);
     final isLoading = useState(false);
     return Scaffold(
       body: isLoading.value
@@ -154,7 +154,7 @@ class Login extends HookWidget {
                           ScaffoldMessenger.of(context).showSnackBar(
                             SnackBar(
                               content: Text(
-                                  'Some error occured while signing up: $e'),
+                                  'Some error occured while logging in: $e'),
                             ),
                           );
                         } finally {
