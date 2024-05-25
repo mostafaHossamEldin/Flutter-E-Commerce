@@ -4,8 +4,8 @@ import 'package:flutter/material.dart';
 import 'dart:ui';
 import 'package:flutter/gestures.dart';
 import 'package:go_router/go_router.dart';
-import '../components/primaryButton.dart';
-import '../components/textfield.dart';
+import '../widgets/primaryButton.dart';
+import '../widgets/textfield.dart';
 
 import '../user_auth/firebase_auth_services.dart';
 

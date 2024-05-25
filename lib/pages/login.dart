@@ -6,8 +6,8 @@ import 'dart:ui';
 import 'package:go_router/go_router.dart';
 
 import '../user_auth/firebase_auth_services.dart';
-import '../components/textfield.dart';
-import '../components/primaryButton.dart';
+import '../widgets/textfield.dart';
+import '../widgets/primaryButton.dart';
 
 class Login extends StatelessWidget {
   final TextEditingController _emailController = TextEditingController();

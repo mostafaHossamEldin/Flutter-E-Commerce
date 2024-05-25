@@ -1,31 +1,36 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
-import './pages/home.dart';
-
-import 'pages/login.dart';
-import 'pages/signUp.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:go_router/go_router.dart';
 import 'firebase_options.dart';
-import './components/navBar.dart';
+import 'widgets/navBar.dart';
 
+import 'providers/routesProvider.dart';
+import 'package:provider/provider.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
 // ...
 
 Future<void> main() async {
+  final goRouterProvider = MyGoRouter();
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
-  runApp(const MyApp());
+  runApp(MultiProvider(
+    providers: [
+      ChangeNotifierProvider(create: (_) => goRouterProvider),
+    ],
+    child: MyApp(),
+  ));
 }
 
 // void main() {
 //   runApp(const MyApp());
 // }
 
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+class MyApp extends HookWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -37,10 +42,7 @@ class MyApp extends StatelessWidget {
         body: Column(
           children: [
             Expanded(child: MyApp1()),
-            CustomNavBar(
-              selectedIndex: 0,
-              onItemTapped: (p) {},
-            ),
+            CustomNavBar(),
           ],
         ),
       ),
@@ -49,33 +51,12 @@ class MyApp extends StatelessWidget {
 }
 
 class MyApp1 extends StatelessWidget {
-  const MyApp1({super.key});
-
   @override
   Widget build(BuildContext context) {
-    final _router = GoRouter(
-      initialLocation: '/login', // Set initial route to login page
-      routes: [
-        GoRoute(
-          name: 'login',
-          path: '/login',
-          builder: (context, state) => Login(),
-        ),
-        GoRoute(
-          name: 'signup',
-          path: '/signup',
-          builder: (context, state) => SignUp(),
-        ),
-        GoRoute(
-          name: 'home',
-          path: '/',
-          builder: (context, state) => Home(),
-        ),
-      ],
-    );
+    final router = Provider.of<MyGoRouter>(context);
     return MaterialApp.router(
-      routerConfig: _router,
-      title: 'Travel Gear',
+      routerConfig: router.getRouter,
+      title: "Travel Gear",
     );
   }
 }
