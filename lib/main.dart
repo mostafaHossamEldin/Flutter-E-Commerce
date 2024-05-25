@@ -11,6 +11,7 @@ import 'package:provider/provider.dart';
 import 'providers/routesProvider.dart';
 import 'providers/authProvider.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
+import './providers/product_provider.dart';
 // ...
 
 Future<void> main() async {
@@ -23,6 +24,7 @@ Future<void> main() async {
     providers: [
       ChangeNotifierProvider(create: (_) => goRouterProvider),
       ChangeNotifierProvider(create: (_) => AAProvider()),
+      ChangeNotifierProvider(create: (_) => ProductsProvider()),
     ],
     child: MyApp(),
   ));
