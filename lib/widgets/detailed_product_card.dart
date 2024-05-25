@@ -25,3 +25,4 @@ class DetailedProductCard extends StatelessWidget {
     );
   }
 }
+

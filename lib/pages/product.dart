@@ -17,8 +17,6 @@ class ProductDetailPage extends StatefulWidget {
 
 class _ProductDetailPageState extends State<ProductDetailPage> {
   int quantity = 1;
-  
-
 
   @override
   void initState() {
@@ -31,9 +29,8 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
     final cartProvider = Provider.of<CartProvider>(context);
     final product = productProvider.getProductById(widget.productId);
     final user = FirebaseAuth.instance.currentUser;
-    //if the user is not logged in, the userRating will be 0, else it will be the rating of the user if he has rated the product before
+    // if the user is not logged in, the userRating will be 0, else it will be the rating of the user if he has rated the product before
     double userRating = user != null ? product?.ratings[user.uid] ?? 0 : 0;
-
     if (product == null) {
       return Scaffold(
         appBar: AppBar(),
@@ -61,9 +58,7 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
                   height: MediaQuery.of(context).size.width * 0.8,
                   width: MediaQuery.of(context).size.width * 0.8,
                 ),
-                ),
-              const SizedBox(height: 16),
-              
+              ),
               const SizedBox(height: 16),
               Text(
                 product.name,
@@ -93,7 +88,8 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
                         ),
                         onRatingUpdate: (rating) async {
                           if (user != null) {
-                            await productProvider.addRating(widget.productId, user.uid, rating);
+                            await productProvider.addRating(
+                                widget.productId, user.uid, rating);
                             setState(() {
                               userRating = rating;
                             });
@@ -102,7 +98,8 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
                               context: context,
                               builder: (context) => AlertDialog(
                                 title: const Text('Login Required'),
-                                content: const Text('Please log in to rate this product.'),
+                                content: const Text(
+                                    'Please log in to rate this product.'),
                                 actions: [
                                   TextButton(
                                     onPressed: () => Navigator.of(context).pop(),
@@ -117,7 +114,7 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
                             );
                           }
                         },
-                      ),                      
+                      ),
                       const SizedBox(width: 8),
                       Text(
                         '${product.avgRating.toStringAsFixed(1)} Rating (${product.comments.length} Reviews)',
@@ -128,17 +125,40 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
                 ],
               ),
               const Text(
-                    'Available in stock',
-                    style: TextStyle(fontSize: 16),
-                  ),
+                'Available in stock',
+                style: TextStyle(fontSize: 16),
+              ),
               const SizedBox(height: 16),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text(
-                    '\$${product.price.toStringAsFixed(2)}',
-                    style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
-                  ),
+                  if (product.isDiscounted)
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          'Was: \$${product.price.toStringAsFixed(2)}',
+                          style: const TextStyle(
+                            fontSize: 20,
+                            color: Colors.grey,
+                            decoration: TextDecoration.lineThrough,
+                          ),
+                        ),
+                        Text(
+                          'New: \$${(product.price - (product.price * product.discountPercentage / 100)).toStringAsFixed(2)}',
+                          style: const TextStyle(
+                            fontSize: 24,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.red,
+                          ),
+                        ),
+                      ],
+                    )
+                  else
+                    Text(
+                      '\$${product.price.toStringAsFixed(2)}',
+                      style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+                    ),
                   Row(
                     children: [
                       IconButton(
@@ -182,7 +202,8 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
                 ),
                 onSubmitted: (comment) async {
                   if (user != null) {
-                    await productProvider.addComment(widget.productId, user.email!, comment);
+                    await productProvider.addComment(
+                        widget.productId, user.email!, comment);
                     ScaffoldMessenger.of(context).showSnackBar(
                       const SnackBar(
                         content: Text('You have successfully added a comment.'),
@@ -233,10 +254,22 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
                   style: ElevatedButton.styleFrom(
                     padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 20),
                   ),
-                  child: Text(
-                    '\$${(product.price * quantity).toStringAsFixed(2)} Add to cart',
-                    style: const TextStyle(fontSize: 18),
+                  // child: Text(
+                  //   '\$${(product.price * quantity).toStringAsFixed(2)} Add to cart',
+                  //   style: const TextStyle(fontSize: 18),
+                  // ),
+                  // If the product is discounted, use the discounted price, else use the original price and beside it Add to cart
+                  child:AbsorbPointer(
+                    absorbing: true,
+                    child: Text(
+                      product.isDiscounted
+                          ? '\$${(product.discountedPrice * quantity).toStringAsFixed(2)} Add to cart'
+                          : '\$${(product.price * quantity).toStringAsFixed(2)} Add to cart',
+                      style: const TextStyle(fontSize: 18),
+                    ),
                   ),
+
+
                 ),
               ),
             ],

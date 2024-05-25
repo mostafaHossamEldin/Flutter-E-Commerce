@@ -1,68 +1,78 @@
-// import 'package:flutter/material.dart';
-// import 'package:cloud_firestore/cloud_firestore.dart';
-// import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/material.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import '../Models/Product.dart';
 
-// import '../Models/Product.dart';
-// class VendorProductProvider with ChangeNotifier{
-// Future<void> sendPushNotificationToUsers(String title, String body) async {
-// // Implement your push notification logic here
-//   }
+class VendorProductProvider with ChangeNotifier {
+  final List<Product> _products = [];
 
-//      // Method to add product with push notification
-//     Future<void> addProductWithNotification(Product product) async {
-      
-//       // Add product to Firebase Firestore
-//       await FirebaseFirestore.instance
-//           .collection('products')
-//           .doc(product.id)
-//           .set({
-//         'name': product.name,
-//         'category': product.category,
-//         'avgRating': product.avgRating,
-//         'ratings': product.ratings,
-//         'comments': product.comments,
-//         'vendor': product.vendor,
-//         'imageURL': product.imageURL,
-//         'price': product.price,
-//         'discounted': product.isDiscounted,
-//         'discountPercentage': product.discountPercentage,
-//         'discountedPrice': product.discountedPrice,
-//       });
+  List<Product> get products => [..._products];
 
-//       // Send push notification to users about the new product
-//       await sendPushNotificationToUsers(
-//           'New product added', 'Check out the new product: ${product.name}');
+  Product? getProductById(String id) {
+    return _products.firstWhere((prod) => prod.id == id);
+  }
 
-//       notifyListeners();
-//     }
 
-//     // Method to update a product by adding a discount with push notification
-//     Future<void> updateProductWithDiscount(
-//         String productId, double discountAmount, String vendorId) async {
-//       final productIndex = _products.indexWhere((p) => p.id == productId);
-//       if (productIndex != -1) {
-//         final product = _products[productIndex];
-//         product.discountPercentage = discountAmount;
-//         product.discountedPrice = product.price * (1 - discountAmount / 100);
-//         product.isDiscounted = true;
+  Future<void> fetchAndSetProducts() async {
+    final snapshot = await FirebaseFirestore.instance.collection('products').get();
+    _products.clear();
+    for (var doc in snapshot.docs) {
+      _products.add(Product.fromFirestore(doc));
+    }
+    notifyListeners();
+  }
 
-//         // Update Firebase
-//         await FirebaseFirestore.instance
-//             .collection('products')
-//             .doc(productId)
-//             .update({
-//           'discountPercentage': product.discountPercentage,
-//           'discountedPrice': product.discountedPrice,
-//           'discounted': product.isDiscounted = true,
+  Future<void> addProduct(Product product) async {
+    final docRef = await FirebaseFirestore.instance.collection('products').add(product.toMap());
+    final newProduct = Product(
+      id: docRef.id,
+      name: product.name,
+      category: product.category,
+      avgRating: product.avgRating,
+      ratings: product.ratings,
+      isTopRated: product.isTopRated,
+      comments: product.comments,
+      vendor: product.vendor,
+      imageURL: product.imageURL,
+      price: product.price,
+      quantity: product.quantity,
+      isDiscounted: product.isDiscounted,
+      discountPercentage: product.discountPercentage,
+      discountedPrice: product.discountedPrice,
+      description: product.description,
+    );
+    _products.add(newProduct);
+    notifyListeners();
+  }
 
-//         });
+  Future<void> updateProduct(String id, Map<String, dynamic> data) async {
+    final productIndex = _products.indexWhere((prod) => prod.id == id);
+    if (productIndex >= 0) {
+      await FirebaseFirestore.instance.collection('products').doc(id).update(data);
+      final updatedProduct = Product(
+        id: id,
+        name: data['name'],
+        category: data['category'],
+        avgRating: _products[productIndex].avgRating,
+        ratings: _products[productIndex].ratings,
+        isTopRated: _products[productIndex].isTopRated,
+        comments: _products[productIndex].comments,
+        vendor: _products[productIndex].vendor,
+        imageURL: data['imageURL'] ?? _products[productIndex].imageURL,
+        price: data['price'],
+        quantity: data['quantity'],
+        isDiscounted: data['isDiscounted'],
+        discountPercentage: data['discountPercentage'],
+        discountedPrice: data['price'] - (data['price'] * data['discountPercentage'] / 100),
+        description: data['description'],
+      );
+      _products[productIndex] = updatedProduct;
+      notifyListeners();
+    }
+  }
 
-//         // Send push notification to users about the discount
-//         await sendPushNotificationToUsers('Discount on ${product.name}',
-//             'Get $discountAmount% off on ${product.name}!');
-
-//         notifyListeners();
-//       }
-//     }
-//   }
-  
+  Future<void> deleteProduct(String id) async {
+    await FirebaseFirestore.instance.collection('products').doc(id).delete();
+    _products.removeWhere((prod) => prod.id == id);
+    notifyListeners();
+  }
+}

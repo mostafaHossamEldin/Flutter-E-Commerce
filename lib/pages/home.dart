@@ -7,8 +7,6 @@ import 'package:travelgear/widgets/product_card.dart';
 import 'package:travelgear/widgets/category_chip.dart';
 import 'package:travelgear/Models/category.dart';
 
-
-
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
 
@@ -29,7 +27,8 @@ class _HomePageState extends State<HomePage> {
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-    final productProvider = Provider.of<ProductsProvider>(context, listen: false);
+    final productProvider =
+        Provider.of<ProductsProvider>(context, listen: false);
     productProvider.fetchProducts();
   }
 
@@ -39,11 +38,14 @@ class _HomePageState extends State<HomePage> {
     final products = productProvider.products;
     final filteredProducts = products
         .where((product) =>
-            (selectedCategory == null || product.category == selectedCategory) &&
+            (selectedCategory == null ||
+                product.category == selectedCategory) &&
             product.name.toLowerCase().contains(searchTerm.toLowerCase()))
         .toList();
-    final topRatedProducts = filteredProducts.where((product) => product.isTopRated).toList();
-    final discountedProducts = filteredProducts.where((product) => product.isDiscounted).toList();
+    final topRatedProducts =
+        filteredProducts.where((product) => product.isTopRated).toList();
+    final discountedProducts =
+        filteredProducts.where((product) => product.isDiscounted).toList();
     final allProducts = filteredProducts;
 
     return Scaffold(
@@ -130,17 +132,24 @@ class _HomePageState extends State<HomePage> {
               ),
               const SizedBox(height: 16),
               buildSectionHeader(context, 'Top Rated', () {
-                context.push('/view-all', extra: {'products': topRatedProducts, 'title': 'Top Rated'});
+                context.push('/view-all', extra: {
+                  'products': topRatedProducts,
+                  'title': 'Top Rated'
+                });
               }),
               buildHorizontalProductList(context, topRatedProducts),
               const SizedBox(height: 16),
               buildSectionHeader(context, 'Discounts', () {
-                context.push('/view-all', extra: {'products': discountedProducts, 'title': 'Discounts'});
+                context.push('/view-all', extra: {
+                  'products': discountedProducts,
+                  'title': 'Discounts'
+                });
               }),
               buildHorizontalProductList(context, discountedProducts),
               const SizedBox(height: 16),
               buildSectionHeader(context, 'All Products', () {
-                context.push('/view-all', extra: {'products': allProducts, 'title': 'All Products'});
+                context.push('/view-all',
+                    extra: {'products': allProducts, 'title': 'All Products'});
               }),
               buildHorizontalProductList(context, allProducts),
             ],
@@ -150,7 +159,8 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  Widget buildSectionHeader(BuildContext context, String title, VoidCallback onViewAll) {
+  Widget buildSectionHeader(
+      BuildContext context, String title, VoidCallback onViewAll) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
@@ -169,7 +179,8 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  Widget buildHorizontalProductList(BuildContext context, List<Product> products) {
+  Widget buildHorizontalProductList(
+      BuildContext context, List<Product> products) {
     return SizedBox(
       height: 250,
       child: ListView.builder(
@@ -179,7 +190,8 @@ class _HomePageState extends State<HomePage> {
           if (index == 5) {
             return TextButton(
               onPressed: () {
-                context.push('/view-all', extra: {'products': products, 'title': 'All Products'});
+                context.push('/view-all',
+                    extra: {'products': products, 'title': 'All Products'});
               },
               child: const Text('View All'),
             );
@@ -200,4 +212,5 @@ class _HomePageState extends State<HomePage> {
       ),
     );
   }
+
 }
