@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
@@ -87,6 +88,11 @@ class ProductDetailPage extends StatelessWidget {
                           onPressed: () => Navigator.of(context).pop(),
                           child: const Text('OK'),
                         ),
+                        //go to login using GoRouter
+                        TextButton(
+                          onPressed: () => GoRouter.of(context).go('/login'),
+                          child: const Text('Login'),
+                        ),
                       ],
                     ),
                   );
@@ -102,8 +108,33 @@ class ProductDetailPage extends StatelessWidget {
                 ),
               ),
               onSubmitted: (comment) async {
-                final userEmail = user?.email ?? 'Guest';
-                await productProvider.addComment(productId, userEmail, comment);
+                if (user != null) {
+                  await productProvider.addComment(productId, user.email!, comment);
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(
+                      content: Text('You have successfully added a comment.'),
+                    ),
+                  );
+                } else {
+                  showDialog(
+                    context: context,
+                    builder: (context) => AlertDialog(
+                      title: const Text('Login Required'),
+                      content: const Text('Please log in to leave a comment.'),
+                      actions: [
+                        TextButton(
+                          onPressed: () => Navigator.of(context).pop(),
+                          child: const Text('OK'),
+                        ),
+                        //go to login using GoRouter
+                        TextButton(
+                          onPressed: () => GoRouter.of(context).go('/login'),
+                          child: const Text('Login'),
+                        ),
+                      ],
+                    ),
+                  );
+                }
               },
             ),
             const SizedBox(height: 16),

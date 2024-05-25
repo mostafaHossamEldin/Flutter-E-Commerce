@@ -44,7 +44,7 @@ class _HomePageState extends State<HomePage> {
         .toList();
     final topRatedProducts = filteredProducts.where((product) => product.isTopRated).toList();
     final discountedProducts = filteredProducts.where((product) => product.isDiscounted).toList();
-    final allProducts = products;
+    final allProducts = filteredProducts;
 
     return Scaffold(
       appBar: AppBar(

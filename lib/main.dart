@@ -6,6 +6,9 @@ import 'package:provider/provider.dart';
 import 'package:travelgear/pages/error.dart';
 import 'package:travelgear/pages/product.dart';
 
+import 'package:firebase_messaging/firebase_messaging.dart';
+
+
 import 'firebase_options.dart';
 import 'pages/login.dart';
 import 'pages/signUp.dart';
@@ -19,6 +22,9 @@ Future<void> main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
+
+    await FirebaseMessaging.instance.requestPermission();
+
   runApp(const MyApp());
 }
 
