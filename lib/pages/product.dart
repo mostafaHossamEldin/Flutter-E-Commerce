@@ -23,11 +23,6 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
   @override
   void initState() {
     super.initState();
-    // Initialize selectedSize with the first available size
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      final productProvider = Provider.of<ProductsProvider>(context, listen: false);
-      final product = productProvider.getProductById(widget.productId);
-    });
   }
 
   @override
@@ -61,27 +56,12 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
               Center(
                 child: Image.network(
                   product.imageURL,
-                  height: 200,
-                  width: 200,
+                  height: MediaQuery.of(context).size.width * 0.8,
+                  width: MediaQuery.of(context).size.width * 0.8,
                 ),
-              ),
+                ),
               const SizedBox(height: 16),
-              Center(
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: List.generate(4, (index) {
-                    return Container(
-                      margin: const EdgeInsets.symmetric(horizontal: 4.0),
-                      height: 10,
-                      width: 10,
-                      decoration: BoxDecoration(
-                        color: index == 0 ? Colors.grey : Colors.grey[300],
-                        shape: BoxShape.circle,
-                      ),
-                    );
-                  }),
-                ),
-              ),
+              
               const SizedBox(height: 16),
               Text(
                 product.name,
