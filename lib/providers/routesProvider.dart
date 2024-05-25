@@ -53,6 +53,14 @@ class MyGoRouter extends ChangeNotifier {
           builder: (context, state) => SignUp(),
         ),
         GoRoute(
+          path: '/my-orders',
+          builder: (context, state) => SignUp(),
+        ),
+        GoRoute(
+          path: '/my-favorites',
+          builder: (context, state) => SignUp(),
+        ),
+        GoRoute(
             path: '/view-all',
             builder: (context, state) {
               final extra = state.extra as Map<String, dynamic>;
