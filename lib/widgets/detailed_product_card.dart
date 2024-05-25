@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import '../Models/product.dart';
+import '../models/product.dart';
 
 class DetailedProductCard extends StatelessWidget {
   final Product product;
 
-  const DetailedProductCard({super.key, required this.product});
+  const DetailedProductCard({required this.product});
 
   @override
   Widget build(BuildContext context) {
@@ -16,22 +16,9 @@ class DetailedProductCard extends StatelessWidget {
       child: Card(
         child: Column(
           children: [
-            Image.network(
-              product.imageURL,
-              height: 120,
-              fit: BoxFit.cover,
-            ),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Text(
-                product.name,
-                style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Text('\$${product.price.toStringAsFixed(2)}'),
-            ),
+            Image.network(product.imageURL),
+            Text(product.name),
+            Text('\$${product.price.toStringAsFixed(2)}'),
           ],
         ),
       ),

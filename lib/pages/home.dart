@@ -183,10 +183,15 @@ class _HomePageState extends State<HomePage> {
             );
           } else {
             final product = products[index];
-            return Container(
-              width: 160,
-              margin: const EdgeInsets.only(right: 8.0),
-              child: ProductCard(product: product),
+            return GestureDetector(
+              onTap: () {
+                context.push('/product/${product.id}');
+              },
+              child: Container(
+                width: 160,
+                margin: const EdgeInsets.only(right: 8.0),
+                child: ProductCard(product: product),
+              ),
             );
           }
         },

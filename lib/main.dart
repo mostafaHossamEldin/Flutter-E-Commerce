@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:provider/provider.dart';
+import 'package:travelgear/pages/error.dart';
 import 'package:travelgear/pages/product.dart';
 
 import 'firebase_options.dart';
@@ -53,20 +54,23 @@ class MyApp extends StatelessWidget {
                 title: extra['title'],
               );
             }),
-        // GoRoute(
-        //   path: '/product/:id',
-        //   builder: (context, state) {
-        //     final productId = state.pathParameters['id'];
-        //     return ProductDetailPage(productId: productId);
-        //   },
-        // ),
+        GoRoute(
+          path: '/product/:id',
+          builder: (context, state) {
+            final productId = state.pathParameters['id'];
+            if (productId == null) {
+              return ErrorPage(message: 'Product ID is missing in the route');
+            } else {
+              return ProductDetailPage(productId: productId);
+            }
+          },
+        ),
       ],
     );
 
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (_) => ProductsProvider()),
-        //ChangeNotifierProvider(create: (_) => VendorProvider()),
         ChangeNotifierProvider(create: (_) => CartProvider()),
       ],
       child: MaterialApp.router(
