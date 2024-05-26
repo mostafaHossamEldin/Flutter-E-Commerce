@@ -9,7 +9,7 @@ import 'dart:ui';
 import 'package:go_router/go_router.dart';
 
 import '../user_auth/firebase_auth_services.dart';
-import '../widgets/textfield.dart';
+import '../widgets/customTextFields.dart';
 import '../widgets/primaryButton.dart';
 import '../providers/userProvider.dart';
 import 'package:provider/provider.dart';
@@ -87,7 +87,7 @@ class Login extends HookWidget {
                       ],
                     ),
                     const SizedBox(height: 40),
-                    CustomTextfield(
+                    BigTextField(
                       fieldName: 'Email',
                       hintText: 'JackDanial@google.com',
                       isPassword: false,
@@ -102,7 +102,7 @@ class Login extends HookWidget {
                       },
                     ),
                     const SizedBox(height: 40),
-                    CustomTextfield(
+                    BigTextField(
                       fieldName: 'Password',
                       hintText: '1234qwer',
                       isPassword: true,

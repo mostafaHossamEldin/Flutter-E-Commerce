@@ -14,13 +14,26 @@ class UserProvider extends ChangeNotifier {
     cart: {},
     isLoggedIn: false,
     companyName: '',
-    gender: 0,
+    gender: "Male",
     profilePicture: Image.asset('assets/images/profile.png'),
     favorites: [],
     addresses: [],
   );
 
   Userdb get user => _user;
+
+  void set setUid(p) => _user.uid = p;
+  void set setEmail(p) => _user.email = p;
+  void set setDisplayName(p) => _user.displayName = p;
+  void set setIsVendor(p) => _user.isVendor = p;
+  void set setCart(p) => _user.cart = p;
+  void set setIsLoggedIn(p) => _user.isLoggedIn = p;
+  void set setCompanyName(p) => _user.companyName = p;
+  void set setProfilePicture(p) => _user.profilePicture = p;
+  void set setGender(p) => _user.gender = p;
+  void set setFavorites(p) => _user.favorites = p;
+  void set setAddresses(p) => _user.addresses = p;
+  void set setAll(p) => _user = p;
 
   Future<bool> signupUser(
       email, password, username, isVendor, companyName) async {
@@ -43,7 +56,7 @@ class UserProvider extends ChangeNotifier {
         isLoggedIn: true,
         companyName: companyName,
         profilePicture: Image.asset('assets/images/profile.png'),
-        gender: 0,
+        gender: "Male",
         favorites: [],
         addresses: [],
       );
@@ -89,5 +102,46 @@ class UserProvider extends ChangeNotifier {
     }
     notifyListeners();
     return false;
+  }
+
+  Future<void> updateUserProfile(String fieldName, value) async {
+    await FirebaseFirestore.instance.collection('users').doc(_user.uid).update({
+      fieldName: value,
+    });
+    switch (fieldName) {
+      case 'uid':
+        _user.uid = value;
+        break;
+      case 'email':
+        _user.email = value;
+        break;
+      case 'displayName':
+        _user.displayName = value;
+        break;
+      case 'isVendor':
+        _user.isVendor = value;
+        break;
+      case 'cart':
+        _user.cart = value;
+        break;
+      case 'isLoggedIn':
+        _user.isLoggedIn = value;
+        break;
+      case 'companyName':
+        _user.companyName = value;
+        break;
+      case 'profilePicture':
+        _user.profilePicture = value;
+        break;
+      case 'gender':
+        _user.gender = value;
+        break;
+      case 'favorites':
+        _user.favorites = value;
+        break;
+      case 'addresses':
+        _user.addresses = value;
+        break;
+    }
   }
 }

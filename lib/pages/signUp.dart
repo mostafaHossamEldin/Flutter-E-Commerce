@@ -5,7 +5,7 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:go_router/go_router.dart';
 import '../widgets/primaryButton.dart';
-import '../widgets/textfield.dart';
+import '../widgets/customTextFields.dart';
 import '../widgets/radio.dart';
 
 import '../user_auth/firebase_auth_services.dart';
@@ -102,7 +102,7 @@ class SignUp extends HookWidget {
                         ],
                       ),
                       const SizedBox(height: 40),
-                      CustomTextfield(
+                      BigTextField(
                           fieldName: "Username",
                           hintText: "Jack Danial ",
                           isPassword: false,
@@ -111,7 +111,7 @@ class SignUp extends HookWidget {
                             return value!.length > 3 && value.length < 20;
                           }),
                       const SizedBox(height: 40),
-                      CustomTextfield(
+                      BigTextField(
                           fieldName: "Email",
                           hintText: "JackDanial@google.com",
                           isPassword: false,
@@ -122,7 +122,7 @@ class SignUp extends HookWidget {
                                 null;
                           }),
                       const SizedBox(height: 40),
-                      CustomTextfield(
+                      BigTextField(
                           fieldName: "Password",
                           hintText: "1234qwer",
                           isPassword: true,
@@ -131,7 +131,7 @@ class SignUp extends HookWidget {
                             return value!.length >= 8 && value.length < 20;
                           }),
                       const SizedBox(height: 40),
-                      CustomTextfield(
+                      BigTextField(
                           fieldName: "Confirm Password",
                           hintText: "1234qwer",
                           isPassword: true,
@@ -141,7 +141,7 @@ class SignUp extends HookWidget {
                           }),
                       const SizedBox(height: 40),
                       if (_isVendor)
-                        CustomTextfield(
+                        BigTextField(
                             fieldName: "Company Name",
                             hintText: "El shazly",
                             isPassword: false,

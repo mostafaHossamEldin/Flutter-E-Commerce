@@ -4,18 +4,17 @@ import 'package:flutter/material.dart';
 import 'Address.dart';
 
 class Userdb {
-  final String uid;
-  final String email;
-  final String displayName;
-  final bool isVendor; // Indicates whether the user is a vendor
-  final Map<String, int>
-      cart; // Represents the user's cart (productId -> quantity)
-  final isLoggedIn;
-  final String companyName;
-  final int gender;
-  final List<Address> addresses;
-  final Image profilePicture;
-  final List<String> favorites;
+  String uid;
+  String email;
+  String displayName;
+  bool isVendor; // Indicates whether the user is a vendor
+  Map<String, int> cart; // Represents the user's cart (productId -> quantity)
+  bool isLoggedIn;
+  String companyName;
+  String gender;
+  List<Address> addresses;
+  Image profilePicture;
+  List<String> favorites;
 
   Userdb({
     required this.uid,

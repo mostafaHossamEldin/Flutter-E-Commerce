@@ -25,7 +25,7 @@ class CustomEditButton extends HookWidget {
       child: IconButton(
         onPressed: () {
           isEditing.value = !isEditing.value;
-          isEditing.value ? onSave() : onEdit();
+          isEditing.value ? onEdit() : onSave();
         },
         icon: FittedBox(
           fit: BoxFit.cover,
