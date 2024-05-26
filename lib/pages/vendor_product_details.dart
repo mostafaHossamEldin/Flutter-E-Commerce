@@ -29,26 +29,27 @@ class _VendorProductDetailPageState extends State<VendorProductDetailPage> {
   bool _isLoading = false;
 
   @override
-  void initState() {
-    super.initState();
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      if (widget.productId != null) {
-        final product = Provider.of<VendorProductProvider>(context, listen: false)
-            .getProductById(widget.productId!);
-        if (product != null) {
-          setState(() {
-            _name = product.name;
-            _category = product.category;
-            _price = product.price;
-            _quantity = product.quantity;
-            _description = product.description;
-            _isDiscounted = product.isDiscounted;
-            _discountPercentage = product.discountPercentage;
-          });
-        }
+void initState() {
+  super.initState();
+  WidgetsBinding.instance.addPostFrameCallback((_) {
+    Provider.of<VendorProductProvider>(context, listen: false).fetchAndSetProducts();
+    if (widget.productId != null) {
+      final product = Provider.of<VendorProductProvider>(context, listen: false)
+          .getProductById(widget.productId!);
+      if (product != null) {
+        setState(() {
+          _name = product.name;
+          _category = product.category;
+          _price = product.price;
+          _quantity = product.quantity;
+          _description = product.description;
+          _isDiscounted = product.isDiscounted;
+          _discountPercentage = product.discountPercentage;
+        });
       }
-    });
-  }
+    }
+  });
+}
 
   Future<void> _pickImage() async {
     final picker = ImagePicker();
@@ -90,6 +91,8 @@ class _VendorProductDetailPageState extends State<VendorProductDetailPage> {
         }
         final vendorProductProvider =
             Provider.of<VendorProductProvider>(context, listen: false);
+            print('qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq');
+            print(widget.productId);  
         if (widget.productId != null) {
           vendorProductProvider.updateProduct(widget.productId!, {
             'name': _name,
