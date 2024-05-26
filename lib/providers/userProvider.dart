@@ -15,7 +15,7 @@ class UserProvider extends ChangeNotifier {
     isLoggedIn: false,
     companyName: '',
     gender: "Male",
-    profilePicture: Image.asset('assets/images/profile.png'),
+    profilePicture: Image.asset('assets/images/defaultPFP.jpg'),
     favorites: [],
     addresses: [],
   );
@@ -68,18 +68,44 @@ class UserProvider extends ChangeNotifier {
     return false;
   }
 
+  Future<bool> logoutUser() async {
+    try {
+      _user = Userdb(
+        uid: '',
+        email: '',
+        displayName: '',
+        isVendor: false,
+        cart: {},
+        isLoggedIn: false,
+        companyName: '',
+        gender: "",
+        addresses: [],
+        profilePicture: Image.asset('assets/images/profile.png'),
+        favorites: [],
+      );
+      notifyListeners();
+      await FirebaseAuth.instance.signOut();
+      return true;
+    } catch (e) {
+      print(e);
+      return false;
+    }
+  }
+
   Future<bool> loginUser(email, password) async {
     var user = await _auth.signInWithEmailAndPassword(email, password);
     if (user != null) {
+      print("LOLOLOLOL0");
       var userData = await FirebaseFirestore.instance
           .collection('users')
           .doc(user.uid)
           .get();
 
-      print("Hey papa");
       print(userData.data());
+      print("LOLOLOLOL1");
       final Map<String, dynamic> data = userData.data() as Map<String, dynamic>;
 
+      print("LOLOLOLOL2");
       _user = Userdb(
         isLoggedIn: true,
         uid: user.uid,
@@ -88,15 +114,15 @@ class UserProvider extends ChangeNotifier {
         isVendor: data['isVendor'] ?? false,
         cart: data.containsKey('cart') ? data['cart'] : {},
         companyName: data['companyName'] ?? '',
-        gender: data.containsKey('gender') ? data['gender'] : 0,
+        gender: data.containsKey('gender') ? data['gender'] : "",
         profilePicture: data.containsKey('profilePicture')
             ? data['profilePicture']
             : Image.asset('assets/images/defaultPFP.jpg'),
         favorites: data.containsKey('favorites') ? data['favorites'] : [],
         addresses: data.containsKey('addresses') ? data['addresses'] : [],
       );
+      print("LOLOLOLOL3");
 
-      print("Dont worry papa");
       notifyListeners();
       return true;
     }

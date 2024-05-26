@@ -1,11 +1,17 @@
+import 'dart:math';
+
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 import '../providers/userProvider.dart';
+import '../user_auth/firebase_auth_services.dart';
 import '../widgets/editButton.dart';
 import '../widgets/customTextFields.dart';
 import '../widgets/radio.dart';
 import '../widgets/addressDisplay.dart';
+import '../widgets/primaryButton.dart';
 
 class UserProfile extends HookWidget {
   final TextEditingController usernameController = TextEditingController();
@@ -76,17 +82,19 @@ class UserProfile extends HookWidget {
                     userProvider.updateUserProfile("email", p);
                   }),
               SizedBox(height: 20),
-              EditableTextField(
-                  fieldName: "Company Name",
-                  hintText: "El shazzly",
-                  initialText: userProvider.user.displayName,
-                  isValid: (p) {
-                    return true;
-                  },
-                  submitEdit: (p) {
-                    userProvider.updateUserProfile("displayName", p);
-                  }),
-              SizedBox(height: 20),
+              userProvider.user.isVendor
+                  ? EditableTextField(
+                      fieldName: "Company",
+                      hintText: "El shazzly",
+                      initialText: userProvider.user.displayName,
+                      isValid: (p) {
+                        return true;
+                      },
+                      submitEdit: (p) {
+                        userProvider.updateUserProfile("displayName", p);
+                      })
+                  : SizedBox(),
+              userProvider.user.isVendor ? SizedBox(height: 20) : SizedBox(),
               CustomRadioBig(
                 text: "Gender",
                 defaultValue: userProvider.user.gender ?? "Male",

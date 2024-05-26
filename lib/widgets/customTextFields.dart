@@ -90,7 +90,7 @@ class EditableTextField extends HookWidget {
 
   @override
   Widget build(BuildContext context) {
-    final isEditing = useState(false);
+    final isEditing = useState(true);
     final text = useState(this.initialText);
 
     return Row(

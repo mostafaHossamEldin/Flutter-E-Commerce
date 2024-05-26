@@ -251,10 +251,7 @@ class AddressDisplay extends HookWidget {
               ],
             ),
             Column(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              crossAxisAlignment: CrossAxisAlignment.end,
               children: [
-                SizedBox(height: 120),
                 CustomEditButton(
                     onSave: () {
                       onSave(Address(

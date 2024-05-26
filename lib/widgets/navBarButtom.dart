@@ -52,7 +52,7 @@ class CustomNavBar extends StatelessWidget {
             padding: const EdgeInsets.all(10),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: isLoggedIn
+              children: isLoggedIn && !isVendor
                   ? [
                       Container(
                         // Home
@@ -146,77 +146,151 @@ class CustomNavBar extends StatelessWidget {
                         ),
                       ),
                     ]
-                  : [
-                      Container(
-                        // Home
-                        decoration: BoxDecoration(
-                          color: selectedIndex == 0
-                              ? const Color.fromRGBO(38, 53, 110, 1)
-                              : Colors.white,
-                          borderRadius:
-                              const BorderRadius.all(Radius.circular(100)),
-                        ),
-                        child: IconButton(
-                          color:
-                              selectedIndex == 0 ? Colors.white : Colors.black,
-                          iconSize: 35,
-                          icon: const Icon(CupertinoIcons.house_fill),
-                          onPressed: () {
-                            routeProvider.getRouter.push('/');
-                          },
-                        ),
-                      ),
-                      Container(
-                        // Login
-                        decoration: BoxDecoration(
-                          color: selectedIndex == 1
-                              ? const Color.fromRGBO(38, 53, 110, 1)
-                              : Colors.white,
-                          borderRadius:
-                              const BorderRadius.all(Radius.circular(100)),
-                        ),
-                        child: Column(
-                          children: [
-                            IconButton(
+                  : !isVendor
+                      ? [
+                          Container(
+                            // Home
+                            decoration: BoxDecoration(
+                              color: selectedIndex == 0
+                                  ? const Color.fromRGBO(38, 53, 110, 1)
+                                  : Colors.white,
+                              borderRadius:
+                                  const BorderRadius.all(Radius.circular(100)),
+                            ),
+                            child: IconButton(
+                              color: selectedIndex == 0
+                                  ? Colors.white
+                                  : Colors.black,
+                              iconSize: 35,
+                              icon: const Icon(CupertinoIcons.house_fill),
+                              onPressed: () {
+                                routeProvider.getRouter.push('/');
+                              },
+                            ),
+                          ),
+                          Container(
+                            // Login
+                            decoration: BoxDecoration(
                               color: selectedIndex == 1
-                                  ? Colors.white
-                                  : Colors.black,
-                              iconSize: 35,
-                              icon: const Icon(CupertinoIcons.person_fill),
-                              onPressed: () {
-                                print('\n\n\n\n\n\nlogin\n\n\n\n\n\n');
-                                routeProvider.getRouter.push('/login');
-                              },
+                                  ? const Color.fromRGBO(38, 53, 110, 1)
+                                  : Colors.white,
+                              borderRadius:
+                                  const BorderRadius.all(Radius.circular(100)),
                             ),
-                          ],
-                        ),
-                      ),
-                      Container(
-                        // Signup
-                        decoration: BoxDecoration(
-                          color: selectedIndex == 2
-                              ? const Color.fromRGBO(38, 53, 110, 1)
-                              : Colors.white,
-                          borderRadius:
-                              const BorderRadius.all(Radius.circular(100)),
-                        ),
-                        child: Column(
-                          children: [
-                            IconButton(
+                            child: Column(
+                              children: [
+                                IconButton(
+                                  color: selectedIndex == 1
+                                      ? Colors.white
+                                      : Colors.black,
+                                  iconSize: 35,
+                                  icon: const Icon(CupertinoIcons.person_fill),
+                                  onPressed: () {
+                                    print('\n\n\n\n\n\nlogin\n\n\n\n\n\n');
+                                    routeProvider.getRouter.push('/login');
+                                  },
+                                ),
+                              ],
+                            ),
+                          ),
+                          Container(
+                            // Signup
+                            decoration: BoxDecoration(
                               color: selectedIndex == 2
+                                  ? const Color.fromRGBO(38, 53, 110, 1)
+                                  : Colors.white,
+                              borderRadius:
+                                  const BorderRadius.all(Radius.circular(100)),
+                            ),
+                            child: Column(
+                              children: [
+                                IconButton(
+                                  color: selectedIndex == 2
+                                      ? Colors.white
+                                      : Colors.black,
+                                  iconSize: 35,
+                                  icon: const Icon(
+                                      CupertinoIcons.person_badge_plus_fill),
+                                  onPressed: () {
+                                    routeProvider.getRouter.push('/signup');
+                                  },
+                                ),
+                              ],
+                            ),
+                          ),
+                        ]
+                      : [
+                          Container(
+                            // Home
+                            decoration: BoxDecoration(
+                              color: selectedIndex == 0
+                                  ? const Color.fromRGBO(38, 53, 110, 1)
+                                  : Colors.white,
+                              borderRadius:
+                                  const BorderRadius.all(Radius.circular(100)),
+                            ),
+                            child: IconButton(
+                              color: selectedIndex == 0
                                   ? Colors.white
                                   : Colors.black,
                               iconSize: 35,
-                              icon: const Icon(
-                                  CupertinoIcons.person_badge_plus_fill),
+                              icon: const Icon(CupertinoIcons.house_fill),
                               onPressed: () {
-                                routeProvider.getRouter.push('/signup');
+                                routeProvider.getRouter.push('/');
                               },
                             ),
-                          ],
-                        ),
-                      ),
-                    ],
+                          ),
+                          Container(
+                            // Notifications
+                            decoration: BoxDecoration(
+                              color: selectedIndex == 1
+                                  ? const Color.fromRGBO(38, 53, 110, 1)
+                                  : Colors.white,
+                              borderRadius:
+                                  const BorderRadius.all(Radius.circular(100)),
+                            ),
+                            child: Column(
+                              children: [
+                                IconButton(
+                                  color: selectedIndex == 1
+                                      ? Colors.white
+                                      : Colors.black,
+                                  iconSize: 35,
+                                  icon: const Icon(CupertinoIcons.bell_fill),
+                                  onPressed: () {
+                                    print('\n\n\n\n\n\nlogin\n\n\n\n\n\n');
+                                    routeProvider.getRouter
+                                        .push('/notifications');
+                                  },
+                                ),
+                              ],
+                            ),
+                          ),
+                          Container(
+                            // Profile
+                            decoration: BoxDecoration(
+                              color: selectedIndex == 2
+                                  ? const Color.fromRGBO(38, 53, 110, 1)
+                                  : Colors.white,
+                              borderRadius:
+                                  const BorderRadius.all(Radius.circular(100)),
+                            ),
+                            child: Column(
+                              children: [
+                                IconButton(
+                                  color: selectedIndex == 2
+                                      ? Colors.white
+                                      : Colors.black,
+                                  iconSize: 35,
+                                  icon: const Icon(CupertinoIcons.person_fill),
+                                  onPressed: () {
+                                    routeProvider.getRouter.push('/profile');
+                                  },
+                                ),
+                              ],
+                            ),
+                          ),
+                        ],
             ),
           );
   }
