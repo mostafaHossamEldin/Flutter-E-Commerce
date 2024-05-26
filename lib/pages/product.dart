@@ -3,6 +3,7 @@ import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+import 'package:travelgear/providers/userProvider.dart';
 import '../providers/product_provider.dart';
 import '../providers/cart_provider.dart';
 
@@ -26,7 +27,7 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
   @override
   Widget build(BuildContext context) {
     final productProvider = Provider.of<ProductsProvider>(context);
-    final cartProvider = Provider.of<CartProvider>(context);
+    final userProvider = Provider.of<UserProvider>(context);
     final product = productProvider.getProductById(widget.productId);
     final user = FirebaseAuth.instance.currentUser;
     // if the user is not logged in, the userRating will be 0, else it will be the rating of the user if he has rated the product before
@@ -62,7 +63,8 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
               const SizedBox(height: 16),
               Text(
                 product.name,
-                style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+                style:
+                    const TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
               ),
               const SizedBox(height: 8),
               Text(
@@ -102,11 +104,13 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
                                     'Please log in to rate this product.'),
                                 actions: [
                                   TextButton(
-                                    onPressed: () => Navigator.of(context).pop(),
+                                    onPressed: () =>
+                                        Navigator.of(context).pop(),
                                     child: const Text('OK'),
                                   ),
                                   TextButton(
-                                    onPressed: () => GoRouter.of(context).go('/login'),
+                                    onPressed: () =>
+                                        GoRouter.of(context).go('/login'),
                                     child: const Text('Login'),
                                   ),
                                 ],
@@ -117,7 +121,7 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
                       ),
                       const SizedBox(width: 8),
                       Text(
-                      //  '${product.avgRating.toStringAsFixed(1)} Rating (${product.comments.length} Reviews)',
+                        //  '${product.avgRating.toStringAsFixed(1)} Rating (${product.comments.length} Reviews)',
                         '${product.avgRating.toStringAsFixed(1)} Rating (${product.ratings.length} Reviews)',
                         style: const TextStyle(fontSize: 16),
                       ),
@@ -158,7 +162,8 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
                   else
                     Text(
                       '\$${product.price.toStringAsFixed(2)}',
-                      style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+                      style: const TextStyle(
+                          fontSize: 24, fontWeight: FontWeight.bold),
                     ),
                   Row(
                     children: [
@@ -215,7 +220,8 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
                       context: context,
                       builder: (context) => AlertDialog(
                         title: const Text('Login Required'),
-                        content: const Text('Please log in to leave a comment.'),
+                        content:
+                            const Text('Please log in to leave a comment.'),
                         actions: [
                           TextButton(
                             onPressed: () => Navigator.of(context).pop(),
@@ -250,17 +256,21 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
               Center(
                 child: ElevatedButton(
                   onPressed: () {
-                    cartProvider.addToCart(product, quantity);
+                    userProvider.updateUserProfile("cart", {
+                      ...userProvider.user.cart,
+                      widget.productId: quantity
+                    });
                   },
                   style: ElevatedButton.styleFrom(
-                    padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 20),
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 40, vertical: 20),
                   ),
                   // child: Text(
                   //   '\$${(product.price * quantity).toStringAsFixed(2)} Add to cart',
                   //   style: const TextStyle(fontSize: 18),
                   // ),
                   // If the product is discounted, use the discounted price, else use the original price and beside it Add to cart
-                  child:AbsorbPointer(
+                  child: AbsorbPointer(
                     absorbing: true,
                     child: Text(
                       product.isDiscounted
@@ -269,8 +279,6 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
                       style: const TextStyle(fontSize: 18),
                     ),
                   ),
-
-
                 ),
               ),
             ],

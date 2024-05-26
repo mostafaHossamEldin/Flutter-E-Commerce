@@ -3,6 +3,7 @@ import '../Models/User.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import '../user_auth/firebase_auth_services.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import '../Models/Address.dart';
 
 class UserProvider extends ChangeNotifier {
   final FirebaseAuthServices _auth = FirebaseAuthServices();
@@ -21,6 +22,8 @@ class UserProvider extends ChangeNotifier {
   );
 
   Userdb get user => _user;
+
+  String get getUid => _user.uid;
 
   void set setUid(p) => _user.uid = p;
   void set setEmail(p) => _user.email = p;
@@ -119,7 +122,9 @@ class UserProvider extends ChangeNotifier {
             ? data['profilePicture']
             : Image.asset('assets/images/defaultPFP.jpg'),
         favorites: data.containsKey('favorites') ? data['favorites'] : [],
-        addresses: data.containsKey('addresses') ? data['addresses'] : [],
+        addresses: data.containsKey('addresses')
+            ? fromJson(data['addresses'])
+            : [] as List<Address>,
       );
       print("LOLOLOLOL3");
 
@@ -129,6 +134,20 @@ class UserProvider extends ChangeNotifier {
     notifyListeners();
     return false;
   }
+
+  List<Address> Function(List<dynamic> json) fromJson = (json) {
+    return json
+        .map((address) => Address(
+              streetAddress1: address['streetAddress1'],
+              streetAddress2: address['streetAddress2'],
+              city: address['city'],
+              state: address['state'],
+              phoneNumber: address['phoneNumber'],
+              zipCode: address['zipCode'],
+              country: address['country'],
+            ))
+        .toList();
+  };
 
   Future<void> updateUserProfile(String fieldName, value) async {
     await FirebaseFirestore.instance.collection('users').doc(_user.uid).update({
@@ -166,8 +185,9 @@ class UserProvider extends ChangeNotifier {
         _user.favorites = value;
         break;
       case 'addresses':
-        _user.addresses = value;
+        _user.addresses = fromJson(value);
         break;
     }
+    notifyListeners();
   }
 }

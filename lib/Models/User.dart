@@ -8,7 +8,7 @@ class Userdb {
   String email;
   String displayName;
   bool isVendor; // Indicates whether the user is a vendor
-  Map<String, int> cart; // Represents the user's cart (productId -> quantity)
+  Map<String, int> cart; // Initialize the cart
   bool isLoggedIn;
   String companyName;
   String gender;

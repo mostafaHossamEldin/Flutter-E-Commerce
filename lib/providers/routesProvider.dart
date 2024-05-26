@@ -9,6 +9,10 @@ import '../pages/userProfile.dart';
 import '../pages/error.dart';
 import '../pages/product.dart';
 import '../pages/vendor_product_details.dart';
+import '../pages/vendorLocations.dart';
+import '../pages/vendorProducts.dart';
+import '../pages/card.dart';
+import '../pages/cart.dart';
 
 class MyNavigatorObserver extends NavigatorObserver {
   final Function(String) onPop;
@@ -40,7 +44,7 @@ class MyGoRouter extends ChangeNotifier {
         GoRoute(
           name: "cart",
           path: '/cart',
-          builder: (context, state) => const HomePage(),
+          builder: (context, state) => UserCart(),
         ),
         GoRoute(
           name: "notifications",
@@ -103,14 +107,35 @@ class MyGoRouter extends ChangeNotifier {
               return const ErrorPage(
                   message: 'Product ID is missing in the route');
             } else {
-              return VendorProductDetailPage(productId: productId);
+              return VendorProductDetailPage(
+                productId: productId,
+              );
             }
           },
         ),
         GoRoute(
           path: '/vendor-product',
           builder: (context, state) {
-            return const VendorProductDetailPage(productId: null);
+            return VendorProductDetailPage(productId: null);
+          },
+        ),
+        GoRoute(
+          path: '/vendor-products',
+          builder: (context, state) {
+            return VendorProducts();
+          },
+        ),
+        GoRoute(
+          path: '/vendor-locations',
+          builder: (context, state) {
+            return VendorLocations();
+          },
+        ),
+        GoRoute(
+          name: "payment",
+          path: '/payment',
+          builder: (context, state) {
+            return PaymentCard();
           },
         ),
         //  GoRoute(
@@ -141,7 +166,6 @@ class MyGoRouter extends ChangeNotifier {
       redirect: (context, state) {
         print("state.matchedLocation " + state.matchedLocation);
         updateRoute(state.matchedLocation);
-        return null; // No redirection
       },
       observers: [
         MyNavigatorObserver((previousRouteName) {

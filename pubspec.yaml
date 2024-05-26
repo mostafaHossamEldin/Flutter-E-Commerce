@@ -67,6 +67,7 @@ dev_dependencies:
 flutter:
   assets:
     - assets\images\defaultPFP.jpg
+    - assets\images\card.png
     - assets/fonts/
   fonts:
     - family: CustomFont

@@ -216,42 +216,40 @@ class CustomDrawer extends StatelessWidget {
                     onTap: () {
                       routeProvider.getRouter.push('/notifications');
                     },
-                    child: Container(
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Row(
-                            children: [
-                              Container(
-                                child: Padding(
-                                  padding: const EdgeInsets.all(6.0),
-                                  child: Icon(
-                                    size: 25,
-                                    CupertinoIcons.bell_fill,
-                                    color: Colors.white,
-                                  ),
-                                ),
-                                // circle blue background
-                                decoration: BoxDecoration(
-                                  color: Color.fromRGBO(38, 53, 110, 1),
-                                  borderRadius: const BorderRadius.all(
-                                      Radius.circular(100)),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Row(
+                          children: [
+                            Container(
+                              // circle blue background
+                              decoration: const BoxDecoration(
+                                color: Color.fromRGBO(38, 53, 110, 1),
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(100)),
+                              ),
+                              child: const Padding(
+                                padding: EdgeInsets.all(6.0),
+                                child: Icon(
+                                  size: 25,
+                                  CupertinoIcons.bell_fill,
+                                  color: Colors.white,
                                 ),
                               ),
-                              SizedBox(width: 20),
-                              Text(
-                                'Notifications',
-                                style: TextStyle(
-                                  fontSize: 20,
-                                  color: Colors.black,
-                                  fontWeight: FontWeight.bold,
-                                ),
+                            ),
+                            const SizedBox(width: 20),
+                            const Text(
+                              'Notifications',
+                              style: TextStyle(
+                                fontSize: 20,
+                                color: Colors.black,
+                                fontWeight: FontWeight.bold,
                               ),
-                            ],
-                          ),
-                          Icon(CupertinoIcons.right_chevron),
-                        ],
-                      ),
+                            ),
+                          ],
+                        ),
+                        const Icon(CupertinoIcons.right_chevron),
+                      ],
                     ),
                   ),
                 ],

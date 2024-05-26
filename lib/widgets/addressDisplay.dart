@@ -46,10 +46,10 @@ class AddressDisplay extends HookWidget {
           // drop shadow
           boxShadow: [
             BoxShadow(
-              color: Color.fromARGB(255, 0, 0, 0).withOpacity(0.1),
+              color: Color.fromARGB(255, 0, 0, 0).withOpacity(0.3),
               spreadRadius: 1,
               blurRadius: 5,
-              offset: Offset(0, 3),
+              offset: Offset(0, 5),
             ),
           ],
         ),
@@ -59,217 +59,237 @@ class AddressDisplay extends HookWidget {
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Row(
-                  children: [
-                    const Text(
-                      "Street Address 1: ",
-                      style: TextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.bold,
-                        color: Color(0xFF1C1C1C),
+                Container(
+                  height: 40,
+                  child: Row(
+                    children: [
+                      const Text(
+                        "Street Address 1: ",
+                        style: TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                          color: Color(0xFF1C1C1C),
+                        ),
                       ),
-                    ),
-                    Expanded(
-                      flex: 0,
-                      child: Container(
-                        width: 100,
-                        child: TextField(
-                          enabled: isEditing.value,
-                          controller: streetAddress1Controller,
-                          style: const TextStyle(
+                      Expanded(
+                        flex: 0,
+                        child: Container(
+                          width: 130,
+                          child: TextField(
+                            enabled: isEditing.value,
+                            controller: streetAddress1Controller,
+                            style: const TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.bold,
+                              color: Color(0xFF1C1C1C),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                Container(
+                  height: 40,
+                  child: Row(
+                    children: [
+                      Container(
+                        width: 130,
+                        child: const Text(
+                          "Street Address 2: ",
+                          style: TextStyle(
                             fontSize: 16,
                             fontWeight: FontWeight.bold,
                             color: Color(0xFF1C1C1C),
                           ),
                         ),
                       ),
-                    ),
-                  ],
-                ),
-                Row(
-                  children: [
-                    const Text(
-                      "Street Address 2: ",
-                      style: TextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.bold,
-                        color: Color(0xFF1C1C1C),
-                      ),
-                    ),
-                    Expanded(
-                      flex: 0,
-                      child: Container(
-                        width: 100,
+                      Container(
+                        width: 130,
                         child: TextField(
                           enabled: isEditing.value,
                           controller: streetAddress2Controller,
                           style: const TextStyle(
                             fontSize: 16,
+                            fontWeight: FontWeight.normal,
+                            color: Color(0xFF1C1C1C),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                Container(
+                  height: 40,
+                  child: Row(
+                    children: [
+                      Container(
+                        width: 130,
+                        child: const Text(
+                          "City: ",
+                          style: TextStyle(
+                            fontSize: 16,
                             fontWeight: FontWeight.bold,
                             color: Color(0xFF1C1C1C),
                           ),
                         ),
                       ),
-                    ),
-                  ],
-                ),
-                Row(
-                  children: [
-                    const Text(
-                      "City: ",
-                      style: TextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.bold,
-                        color: Color(0xFF1C1C1C),
-                      ),
-                    ),
-                    Expanded(
-                      flex: 0,
-                      child: Container(
-                        width: 100,
+                      Container(
+                        width: 130,
                         child: TextField(
                           enabled: isEditing.value,
                           controller: cityController,
                           style: const TextStyle(
                             fontSize: 16,
+                            fontWeight: FontWeight.normal,
+                            color: Color(0xFF1C1C1C),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                Container(
+                  height: 40,
+                  child: Row(
+                    children: [
+                      Container(
+                        width: 130,
+                        child: const Text(
+                          "State: ",
+                          style: TextStyle(
+                            fontSize: 16,
                             fontWeight: FontWeight.bold,
                             color: Color(0xFF1C1C1C),
                           ),
                         ),
                       ),
-                    ),
-                  ],
-                ),
-                Row(
-                  children: [
-                    const Text(
-                      "State: ",
-                      style: TextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.bold,
-                        color: Color(0xFF1C1C1C),
-                      ),
-                    ),
-                    Expanded(
-                      flex: 0,
-                      child: Container(
-                        width: 100,
+                      Container(
+                        width: 130,
                         child: TextField(
                           enabled: isEditing.value,
                           controller: stateController,
                           style: const TextStyle(
                             fontSize: 16,
+                            fontWeight: FontWeight.normal,
+                            color: Color(0xFF1C1C1C),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                Container(
+                  height: 40,
+                  child: Row(
+                    children: [
+                      Container(
+                        width: 130,
+                        child: const Text(
+                          "Phone Number: ",
+                          style: TextStyle(
+                            fontSize: 16,
                             fontWeight: FontWeight.bold,
                             color: Color(0xFF1C1C1C),
                           ),
                         ),
                       ),
-                    ),
-                  ],
-                ),
-                Row(
-                  children: [
-                    const Text(
-                      "Phone Number: ",
-                      style: TextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.bold,
-                        color: Color(0xFF1C1C1C),
-                      ),
-                    ),
-                    Expanded(
-                      flex: 0,
-                      child: Container(
-                        width: 100,
+                      Container(
+                        width: 130,
                         child: TextField(
                           enabled: isEditing.value,
                           controller: phoneNumberController,
                           style: const TextStyle(
                             fontSize: 16,
+                            fontWeight: FontWeight.normal,
+                            color: Color(0xFF1C1C1C),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                Container(
+                  height: 40,
+                  child: Row(
+                    children: [
+                      Container(
+                        width: 130,
+                        child: const Text(
+                          "Zip Code: ",
+                          style: TextStyle(
+                            fontSize: 16,
                             fontWeight: FontWeight.bold,
                             color: Color(0xFF1C1C1C),
                           ),
                         ),
                       ),
-                    ),
-                  ],
-                ),
-                Row(
-                  children: [
-                    const Text(
-                      "Zip Code: ",
-                      style: TextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.bold,
-                        color: Color(0xFF1C1C1C),
-                      ),
-                    ),
-                    Expanded(
-                      flex: 0,
-                      child: Container(
-                        width: 100,
+                      Container(
+                        width: 130,
                         child: TextField(
                           enabled: isEditing.value,
                           controller: zipCodeController,
                           style: const TextStyle(
                             fontSize: 16,
-                            fontWeight: FontWeight.bold,
+                            fontWeight: FontWeight.normal,
                             color: Color(0xFF1C1C1C),
                           ),
                         ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
-                Row(
-                  children: [
-                    const Text(
-                      "Country: ",
-                      style: TextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.bold,
-                        color: Color(0xFF1C1C1C),
-                      ),
-                    ),
-                    Expanded(
-                      flex: 0,
-                      child: Container(
-                        width: 100,
-                        child: TextField(
-                          enabled: isEditing.value,
-                          controller: countryController,
-                          style: const TextStyle(
+                Container(
+                  height: 40,
+                  child: Row(
+                    children: [
+                      Container(
+                        width: 130,
+                        child: const Text(
+                          "Country: ",
+                          style: TextStyle(
                             fontSize: 16,
                             fontWeight: FontWeight.bold,
                             color: Color(0xFF1C1C1C),
                           ),
                         ),
                       ),
-                    ),
-                  ],
+                      Container(
+                        width: 130,
+                        child: TextField(
+                          enabled: isEditing.value,
+                          controller: countryController,
+                          style: const TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.normal,
+                            color: Color(0xFF1C1C1C),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
               ],
             ),
-            Column(
-              children: [
-                CustomEditButton(
-                    onSave: () {
-                      onSave(Address(
-                        streetAddress1: streetAddress1Controller.text,
-                        streetAddress2: streetAddress2Controller.text,
-                        city: cityController.text,
-                        state: stateController.text,
-                        phoneNumber: phoneNumberController.text,
-                        zipCode: zipCodeController.text,
-                        country: countryController.text,
-                      ));
-                      isEditing.value = false;
-                    },
-                    onEdit: () {
-                      isEditing.value = true;
-                    },
-                    size: 35)
-              ],
+            Padding(
+              padding: const EdgeInsets.fromLTRB(0, 230, 0, 0),
+              child: CustomEditButton(
+                  onSave: () {
+                    onSave(Address(
+                      streetAddress1: streetAddress1Controller.text,
+                      streetAddress2: streetAddress2Controller.text,
+                      city: cityController.text,
+                      state: stateController.text,
+                      phoneNumber: phoneNumberController.text,
+                      zipCode: zipCodeController.text,
+                      country: countryController.text,
+                    ));
+                    isEditing.value = false;
+                  },
+                  onEdit: () {
+                    isEditing.value = true;
+                  },
+                  size: 35),
             )
           ],
         ));

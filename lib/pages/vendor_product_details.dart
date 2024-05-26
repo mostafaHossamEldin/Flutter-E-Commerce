@@ -5,15 +5,18 @@ import 'package:image_picker/image_picker.dart';
 import 'dart:io';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:travelgear/providers/vendor_product_provider.dart';
+import '../providers/userProvider.dart';
 import '../Models/Product.dart';
+import '../widgets/customTextFields.dart';
 
 class VendorProductDetailPage extends StatefulWidget {
   final String? productId;
 
-  const VendorProductDetailPage({Key? key, this.productId}) : super(key: key);
+  VendorProductDetailPage({this.productId});
 
   @override
-  _VendorProductDetailPageState createState() => _VendorProductDetailPageState();
+  _VendorProductDetailPageState createState() =>
+      _VendorProductDetailPageState();
 }
 
 class _VendorProductDetailPageState extends State<VendorProductDetailPage> {
@@ -32,10 +35,14 @@ class _VendorProductDetailPageState extends State<VendorProductDetailPage> {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      Provider.of<VendorProductProvider>(context, listen: false).fetchAndSetProducts();
+      Provider.of<VendorProductProvider>(context, listen: false)
+          .fetchAndSetProducts();
       if (widget.productId != null) {
-        final product = Provider.of<VendorProductProvider>(context, listen: false)
-            .getProductById(widget.productId!);
+        final product =
+            Provider.of<VendorProductProvider>(context, listen: false)
+                .getProductById(widget.productId!);
+        print("widget.productId " + widget.productId.toString());
+        print("widget.productId " + product.toString());
         if (product != null) {
           setState(() {
             _name = product.name;
@@ -79,6 +86,8 @@ class _VendorProductDetailPageState extends State<VendorProductDetailPage> {
   }
 
   Future<void> _saveProduct() async {
+    final UserProvider userProvider =
+        Provider.of<UserProvider>(context, listen: false);
     if (_formKey.currentState!.validate()) {
       setState(() {
         _isLoading = true;
@@ -104,6 +113,7 @@ class _VendorProductDetailPageState extends State<VendorProductDetailPage> {
           });
           _showSnackBar('Product updated successfully');
         } else {
+          print("UID: ${userProvider.user.uid}");
           final newProduct = Product(
             id: '',
             name: _name,
@@ -112,7 +122,7 @@ class _VendorProductDetailPageState extends State<VendorProductDetailPage> {
             ratings: {},
             isTopRated: false,
             comments: {},
-            vendor: 'vendorID',
+            vendor: userProvider.user.uid,
             imageURL: imageUrl ?? '',
             price: _price,
             quantity: _quantity,
@@ -161,6 +171,7 @@ class _VendorProductDetailPageState extends State<VendorProductDetailPage> {
 
   @override
   Widget build(BuildContext context) {
+    print("objecttttt" + _name);
     return Scaffold(
       appBar: AppBar(
         title: Text(widget.productId != null ? 'Edit Product' : 'Add Product'),
@@ -173,18 +184,31 @@ class _VendorProductDetailPageState extends State<VendorProductDetailPage> {
                 key: _formKey,
                 child: ListView(
                   children: [
-                    TextFormField(
-                      initialValue: _name,
-                      decoration: const InputDecoration(labelText: 'Product Name'),
-                      validator: (value) {
+                    EditableTextField(
+                      fieldName: 'Product Name',
+                      hintText: _name,
+                      isValid: (value) {
                         if (value == null || value.isEmpty) {
-                          return 'Please enter product name';
+                          return false;
                         }
-                        return null;
+                        return true;
                       },
-                      onSaved: (value) {
-                        _name = value!;
+                      submitEdit: (value) {
+                        _name = value.toString();
                       },
+                      initialText: _name,
+
+                      // decoration:
+                      //     const InputDecoration(labelText: 'Product Name'),
+                      // validator: (value) {
+                      //   if (value == null || value.isEmpty) {
+                      //     return 'Please enter product name';
+                      //   }
+                      //   return null;
+                      // },
+                      // onSaved: (value) {
+                      //   _name = value!;
+                      // },
                     ),
                     DropdownButtonFormField<String>(
                       value: _category,
@@ -204,47 +228,94 @@ class _VendorProductDetailPageState extends State<VendorProductDetailPage> {
                         _category = value!;
                       },
                     ),
-                    TextFormField(
-                      initialValue: _price.toString(),
-                      decoration: const InputDecoration(labelText: 'Price'),
-                      keyboardType: TextInputType.number,
-                      validator: (value) {
+                    EditableTextField(
+                      fieldName: 'Price',
+                      hintText: _price.toString(),
+                      isValid: (value) {
                         if (value == null || value.isEmpty) {
-                          return 'Please enter product price';
+                          return false;
                         }
-                        if (double.tryParse(value) == null || double.parse(value) <= 0) {
-                          return 'Please enter a valid price greater than 0';
+                        if (double.tryParse(value) == null ||
+                            double.parse(value) <= 0) {
+                          return false;
                         }
-                        return null;
+                        return true;
                       },
-                      onSaved: (value) {
-                        _price = double.parse(value!);
+                      submitEdit: (value) {
+                        _price = double.parse(value.toString());
                       },
+                      initialText: _price.toString(),
+                      // initialValue: _price.toString(),
+                      // decoration: const InputDecoration(labelText: 'Price'),
+                      // keyboardType: TextInputType.number,
+                      // validator: (value) {
+                      //   if (value == null || value.isEmpty) {
+                      //     return 'Please enter product price';
+                      //   }
+                      //   if (double.tryParse(value) == null ||
+                      //       double.parse(value) <= 0) {
+                      //     return 'Please enter a valid price greater than 0';
+                      //   }
+                      //   return null;
+                      // },
+                      // onSaved: (value) {
+                      //   _price = double.parse(value!);
+                      // },
                     ),
-                    TextFormField(
-                      initialValue: _quantity.toString(),
-                      decoration: const InputDecoration(labelText: 'Quantity'),
-                      keyboardType: TextInputType.number,
-                      validator: (value) {
+                    EditableTextField(
+                      fieldName: 'Quantity',
+                      hintText: _quantity.toString(),
+                      isValid: (value) {
                         if (value == null || value.isEmpty) {
-                          return 'Please enter product quantity';
+                          return false;
                         }
-                        if (int.tryParse(value) == null || int.parse(value) <= 0) {
-                          return 'Please enter a valid quantity greater than 0';
+                        if (int.tryParse(value) == null ||
+                            int.parse(value) <= 0) {
+                          return false;
                         }
-                        return null;
+                        return true;
                       },
-                      onSaved: (value) {
-                        _quantity = int.parse(value!);
+                      submitEdit: (value) {
+                        _quantity = int.parse(value.toString());
                       },
+                      initialText: _quantity.toString(),
+                      // initialValue: _quantity.toString(),
+                      // decoration: const InputDecoration(labelText: 'Quantity'),
+                      // keyboardType: TextInputType.number,
+                      // validator: (value) {
+                      //   if (value == null || value.isEmpty) {
+                      //     return 'Please enter product quantity';
+                      //   }
+                      //   if (int.tryParse(value) == null ||
+                      //       int.parse(value) <= 0) {
+                      //     return 'Please enter a valid quantity greater than 0';
+                      //   }
+                      //   return null;
+                      // },
+                      // onSaved: (value) {
+                      //   _quantity = int.parse(value!);
+                      // },
                     ),
-                    TextFormField(
-                      initialValue: _description,
-                      decoration: const InputDecoration(labelText: 'Description'),
-                      maxLines: 3,
-                      onSaved: (value) {
-                        _description = value!;
+                    EditableTextField(
+                      fieldName: 'Description',
+                      hintText: _description,
+                      isValid: (value) {
+                        if (value == null || value.isEmpty) {
+                          return false;
+                        }
+                        return true;
                       },
+                      submitEdit: (value) {
+                        _description = value.toString();
+                      },
+                      initialText: _description,
+                      // initialValue: _description,
+                      // decoration:
+                      //     const InputDecoration(labelText: 'Description'),
+                      // maxLines: 3,
+                      // onSaved: (value) {
+                      //   _description = value!;
+                      // },
                     ),
                     SwitchListTile(
                       title: const Text('Discounted'),
@@ -256,25 +327,42 @@ class _VendorProductDetailPageState extends State<VendorProductDetailPage> {
                       },
                     ),
                     if (_isDiscounted)
-                      TextFormField(
-                        initialValue: _discountPercentage.toString(),
-                        decoration:
-                            const InputDecoration(labelText: 'Discount Percentage'),
-                        keyboardType: TextInputType.number,
-                        validator: (value) {
+                      EditableTextField(
+                        fieldName: 'Discount Percentage',
+                        hintText: _discountPercentage.toString(),
+                        isValid: (value) {
                           if (value == null || value.isEmpty) {
-                            return 'Please enter discount percentage';
+                            return false;
                           }
                           if (double.tryParse(value) == null ||
                               double.parse(value) < 0 ||
                               double.parse(value) > 100) {
-                            return 'Please enter a valid percentage (0-100)';
+                            return false;
                           }
-                          return null;
+                          return true;
                         },
-                        onSaved: (value) {
-                          _discountPercentage = double.parse(value!);
+                        submitEdit: (value) {
+                          _discountPercentage = double.parse(value.toString());
                         },
+                        initialText: _discountPercentage.toString(),
+                        // initialValue: _discountPercentage.toString(),
+                        // decoration: const InputDecoration(
+                        //     labelText: 'Discount Percentage'),
+                        // keyboardType: TextInputType.number,
+                        // validator: (value) {
+                        //   if (value == null || value.isEmpty) {
+                        //     return 'Please enter discount percentage';
+                        //   }
+                        //   if (double.tryParse(value) == null ||
+                        //       double.parse(value) < 0 ||
+                        //       double.parse(value) > 100) {
+                        //     return 'Please enter a valid percentage (0-100)';
+                        //   }
+                        //   return null;
+                        // },
+                        // onSaved: (value) {
+                        //   _discountPercentage = double.parse(value!);
+                        // },
                       ),
                     const SizedBox(height: 10),
                     Row(

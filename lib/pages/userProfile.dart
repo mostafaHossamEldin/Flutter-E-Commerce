@@ -12,6 +12,9 @@ import '../widgets/customTextFields.dart';
 import '../widgets/radio.dart';
 import '../widgets/addressDisplay.dart';
 import '../widgets/primaryButton.dart';
+import '../widgets/optionsSection.dart';
+import '../widgets/optionButton.dart';
+import 'package:flutter/cupertino.dart';
 
 class UserProfile extends HookWidget {
   final TextEditingController usernameController = TextEditingController();
@@ -22,8 +25,9 @@ class UserProfile extends HookWidget {
     final userProvider = Provider.of<UserProvider>(context);
     return Scaffold(
       body: SingleChildScrollView(
-        child: Padding(
+        child: Container(
           padding: const EdgeInsets.fromLTRB(20, 0, 20, 20),
+          color: Colors.white,
           child: Column(
             children: [
               Stack(
@@ -105,49 +109,67 @@ class UserProfile extends HookWidget {
                 option2: "Female",
               ),
               SizedBox(height: 20),
-              const Align(
-                alignment: Alignment.centerLeft,
-                child: Text("Delivery Address",
-                    style: TextStyle(
-                      fontSize: 24,
-                      fontWeight: FontWeight.bold,
-                      color: Color(0xFF1C1C1C),
-                    )),
-              ),
-              AddressDisplay(
-                streetAddress1: "",
-                streetAddress2: "",
-                city: "Cairo",
-                state: "Cairo",
-                phoneNumber: "123456789",
-                zipCode: "12345",
-                country: "Egypt",
-                onSave: (address) {
-                  userProvider.updateUserProfile("address", address);
-                },
-              ),
+              userProvider.user.isVendor
+                  ? OptionsSection(options: [
+                      OptionButton(
+                        title: "Depot Locations",
+                        onTap: () {
+                          context.push('/vendor-locations');
+                        },
+                        icon: Icon(CupertinoIcons.location_fill),
+                      ),
+                      OptionButton(
+                        title: "My Products",
+                        onTap: () {
+                          context.push('/vendor-products');
+                        },
+                        icon: Icon(CupertinoIcons.square_grid_2x2_fill),
+                      ),
+                      OptionButton(
+                        title: "Add Product",
+                        onTap: () {
+                          context.push('/');
+                        },
+                        icon: Icon(CupertinoIcons.add_circled_solid),
+                      ),
+                    ])
+                  : const Align(
+                      alignment: Alignment.centerLeft,
+                      child: Text("Delivery Address",
+                          style: TextStyle(
+                            fontSize: 24,
+                            fontWeight: FontWeight.bold,
+                            color: Color(0xFF1C1C1C),
+                          )),
+                    ),
               SizedBox(height: 20),
-              CustomPrimaryButton(
-                text: "Add Product",
-                height: 50,
-                width: double.infinity,
-                onPressed: () async {
-                  await userProvider.logoutUser();
-                  context.go('/vendor-product');
-                },
-// icon: Icon(Icons.logout_rounded)),
-              ),
+              !userProvider.user.isVendor
+                  ? AddressDisplay(
+                      streetAddress1: "",
+                      streetAddress2: "",
+                      city: "Cairo",
+                      state: "Cairo",
+                      phoneNumber: "123456789",
+                      zipCode: "12345",
+                      country: "Egypt",
+                      onSave: (address) {
+                        userProvider.updateUserProfile("address", address);
+                      },
+                    )
+                  : SizedBox(),
               SizedBox(height: 20),
-              CustomPrimaryButton(
-                text: "Logout",
-                height: 50,
-                width: double.infinity,
-                onPressed: () async {
-                  await userProvider.logoutUser();
-                  context.goNamed('login');
-                },
-// icon: Icon(Icons.logout_rounded)),
-              ),
+              CustomPrimaryButton2(
+                  text: "Logout",
+                  height: 50,
+                  width: double.infinity,
+                  onPressed: () async {
+                    await userProvider.logoutUser();
+                    context.goNamed('login');
+                  },
+                  icon: Icon(
+                    CupertinoIcons.square_arrow_left_fill,
+                    color: Colors.white,
+                  )),
             ],
           ),
         ),

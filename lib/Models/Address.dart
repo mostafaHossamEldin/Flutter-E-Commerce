@@ -18,4 +18,20 @@ class Address {
     required this.phoneNumber,
     required this.zipCode,
   });
+
+  String toString() {
+    return "{StreetAddress1: $streetAddress1, StreetAddress2: $streetAddress2, Country: $country, State: $state, City: $city, PhoneNumber: $phoneNumber, ZipCode: $zipCode}";
+  }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'streetAddress1': streetAddress1,
+      'streetAddress2': streetAddress2,
+      'country': country,
+      'state': state,
+      'city': city,
+      'phoneNumber': phoneNumber,
+      'zipCode': zipCode,
+    };
+  }
 }
