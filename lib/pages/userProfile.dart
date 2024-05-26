@@ -126,6 +126,17 @@ class UserProfile extends HookWidget {
                   userProvider.updateUserProfile("address", address);
                 },
               ),
+              SizedBox(height: 20),
+              CustomPrimaryButton(
+                text: "Logout",
+                height: 50,
+                width: double.infinity,
+                onPressed: () async {
+                  await userProvider.logoutUser();
+                  context.goNamed('login');
+                },
+// icon: Icon(Icons.logout_rounded)),
+              ),
             ],
           ),
         ),
