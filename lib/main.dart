@@ -4,19 +4,20 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'package:go_router/go_router.dart';
 import 'firebase_options.dart';
 import 'widgets/navBarButtom.dart';
 
 import 'package:provider/provider.dart';
 import 'providers/routesProvider.dart';
 import 'providers/userProvider.dart';
-import 'package:flutter_hooks/flutter_hooks.dart';
 import './providers/product_provider.dart';
 
 import './widgets/drawer.dart';
 
 // ...
+import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:travelgear/providers/vendor_product_provider.dart';
+import 'providers/cart_provider.dart';
 
 Future<void> main() async {
   final goRouterProvider = MyGoRouter();
@@ -25,11 +26,15 @@ Future<void> main() async {
     options: DefaultFirebaseOptions.currentPlatform,
   );
 
+  await FirebaseMessaging.instance.requestPermission();
+
   runApp(MultiProvider(
     providers: [
       ChangeNotifierProvider(create: (_) => goRouterProvider),
       ChangeNotifierProvider(create: (_) => UserProvider()),
       ChangeNotifierProvider(create: (_) => ProductsProvider()),
+      ChangeNotifierProvider(create: (_) => CartProvider()),
+      ChangeNotifierProvider(create: (_) => VendorProductProvider()),
     ],
     child: MyApp(),
   ));

@@ -128,6 +128,17 @@ class UserProfile extends HookWidget {
               ),
               SizedBox(height: 20),
               CustomPrimaryButton(
+                text: "Add Product",
+                height: 50,
+                width: double.infinity,
+                onPressed: () async {
+                  await userProvider.logoutUser();
+                  context.go('/vendor-product');
+                },
+// icon: Icon(Icons.logout_rounded)),
+              ),
+              SizedBox(height: 20),
+              CustomPrimaryButton(
                 text: "Logout",
                 height: 50,
                 width: double.infinity,

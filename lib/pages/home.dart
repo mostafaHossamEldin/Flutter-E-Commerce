@@ -1,15 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
-import '../Models/category.dart';
-import '../Models/Product.dart';
+import '../Models/product.dart';
+import '../providers/product_provider.dart';
 import '../widgets/product_card.dart';
 import '../widgets/category_chip.dart';
-import '../providers/product_provider.dart';
-import 'view_all_page.dart';
+import '../Models/category.dart';
 
 class HomePage extends StatefulWidget {
-  const HomePage({Key? key}) : super(key: key);
+  const HomePage({super.key});
 
   @override
   _HomePageState createState() => _HomePageState();
@@ -47,11 +46,16 @@ class _HomePageState extends State<HomePage> {
         filteredProducts.where((product) => product.isTopRated).toList();
     final discountedProducts =
         filteredProducts.where((product) => product.isDiscounted).toList();
-    final allProducts = products;
+    final allProducts = filteredProducts;
 
     return Scaffold(
+      appBar: AppBar(
+        title: const Text('Explore the Travel Gear'),
+        backgroundColor: Colors.white,
+        elevation: 0,
+      ),
       body: Padding(
-        padding: const EdgeInsets.fromLTRB(16, 0, 16, 16),
+        padding: const EdgeInsets.all(16.0),
         child: SingleChildScrollView(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -193,10 +197,15 @@ class _HomePageState extends State<HomePage> {
             );
           } else {
             final product = products[index];
-            return Container(
-              width: 160,
-              margin: const EdgeInsets.only(right: 8.0),
-              child: ProductCard(product: product),
+            return GestureDetector(
+              onTap: () {
+                context.push('/product/${product.id}');
+              },
+              child: Container(
+                width: 160,
+                margin: const EdgeInsets.only(right: 8.0),
+                child: ProductCard(product: product),
+              ),
             );
           }
         },

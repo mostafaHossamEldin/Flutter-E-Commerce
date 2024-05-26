@@ -6,6 +6,9 @@ import '../pages/login.dart';
 import '../pages/signUp.dart';
 import '../pages/view_all_page.dart';
 import '../pages/userProfile.dart';
+import '../pages/error.dart';
+import '../pages/product.dart';
+import '../pages/vendor_product_details.dart';
 
 class MyNavigatorObserver extends NavigatorObserver {
   final Function(String) onPop;
@@ -76,7 +79,64 @@ class MyGoRouter extends ChangeNotifier {
                 products: extra['products'],
                 title: extra['title'],
               );
-            })
+            }),
+        GoRoute(
+          path: '/product/:id',
+          builder: (context, state) {
+            final productId = state.pathParameters['id'];
+            print(productId);
+            if (productId == null) {
+              return const ErrorPage(
+                  message: 'Product ID is missing in the route');
+            } else {
+              return ProductDetailPage(productId: productId);
+            }
+          },
+        ),
+        GoRoute(
+          path: '/vendor-product/:id',
+          builder: (context, state) {
+            final productId = state.pathParameters['id'];
+            print(productId);
+
+            if (productId == null) {
+              return const ErrorPage(
+                  message: 'Product ID is missing in the route');
+            } else {
+              return VendorProductDetailPage(productId: productId);
+            }
+          },
+        ),
+        GoRoute(
+          path: '/vendor-product',
+          builder: (context, state) {
+            return const VendorProductDetailPage(productId: null);
+          },
+        ),
+        //  GoRoute(
+        //       path: '/vendor-product/:id',
+        //       builder: (context, state) => VendorProductDetailPage(),
+        //       redirect: (context, state) async {
+        //         final vendorProvider = Provider.of<VendorProductProvider>(context, listen: false);
+        //         final isAuthenticated = await vendorProvider.isAuthenticated();
+        //         if (!isAuthenticated) {
+        //           return '/error/not_authenticated';
+        //         }
+        //         final isVendor = await vendorProvider.isVendor();
+        //         if (!isVendor) {
+        //           return '/error/not_authorised';
+        //         }
+        //         return null;
+        //       },
+        //     ),
+
+        GoRoute(
+          path: '/error/:message',
+          builder: (context, state) {
+            final message = state.pathParameters['message']!;
+            return ErrorPage(message: message);
+          },
+        ),
       ],
       redirect: (context, state) {
         print("state.matchedLocation " + state.matchedLocation);

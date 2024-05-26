@@ -42,10 +42,13 @@ dependencies:
   google_fonts: ^6.2.1
   cloud_firestore: ^4.17.4
   flutter_hooks: ^0.20.5
-  flutter_riverpod: ^2.5.1
   routemaster: ^1.0.1
   provider: ^6.1.2
+  firebase_messaging: ^14.9.3
 
+  flutter_rating_bar: any
+  firebase_storage: ^11.7.6
+  image_picker: ^1.1.1
 dev_dependencies:
   flutter_test:
     sdk: flutter
