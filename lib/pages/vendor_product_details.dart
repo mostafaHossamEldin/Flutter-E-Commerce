@@ -27,6 +27,7 @@ class _VendorProductDetailPageState extends State<VendorProductDetailPage> {
   bool _isDiscounted = false;
   double _discountPercentage = 0.0;
   bool _isLoading = false;
+  String _imageUrl = '';
 
   @override
   void initState() {
@@ -85,7 +86,7 @@ class _VendorProductDetailPageState extends State<VendorProductDetailPage> {
       });
       _formKey.currentState!.save();
       try {
-        String? imageUrl;
+        String? imageUrl = _imageUrl;
         if (_imageFile != null) {
           imageUrl = await _uploadImage();
         }
@@ -258,8 +259,7 @@ class _VendorProductDetailPageState extends State<VendorProductDetailPage> {
                     if (_isDiscounted)
                       TextFormField(
                         initialValue: _discountPercentage.toString(),
-                        decoration:
-                            const InputDecoration(labelText: 'Discount Percentage'),
+                        decoration: const InputDecoration(labelText: 'Discount Percentage'),
                         keyboardType: TextInputType.number,
                         validator: (value) {
                           if (value == null || value.isEmpty) {
@@ -277,10 +277,18 @@ class _VendorProductDetailPageState extends State<VendorProductDetailPage> {
                         },
                       ),
                     const SizedBox(height: 10),
+                    TextFormField(
+                      decoration: const InputDecoration(labelText: 'Image URL'),
+                      onSaved: (value) {
+                        _imageUrl = value!;
+                      },
+                    ),
                     Row(
                       children: [
                         _imageFile == null
-                            ? const Text('No image selected.')
+                            ? _imageUrl.isEmpty
+                                ? const Text('No image selected.')
+                                : Image.network(_imageUrl, height: 100, width: 100)
                             : Image.file(_imageFile!, height: 100, width: 100),
                         const Spacer(),
                         ElevatedButton(
