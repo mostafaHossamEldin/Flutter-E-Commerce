@@ -1,16 +1,10 @@
 # travelgear
 
-A new Flutter project.
+A E-Commerce Flutter Application for both Vendors and Clients.
+[FlutterAppPhotos](https://github.com/user-attachments/assets/e65cfc38-df8e-4b05-80aa-7f3f0a386d31)
 
-## Getting Started
+## Tools Used
 
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+- Firebase was used in this project for Datastorage and Notifications management.
+- Figma was use to design pages.
+- The design was built with respect to HCI Guidelines.
