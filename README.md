@@ -1,7 +1,7 @@
-# travelgear
+# TravelGear
 
 A E-Commerce Flutter Application for both Vendors and Clients.
-[FlutterAppPhotos](https://github.com/user-attachments/assets/e65cfc38-df8e-4b05-80aa-7f3f0a386d31)
+![FlutterAppPhotos](https://github.com/user-attachments/assets/e65cfc38-df8e-4b05-80aa-7f3f0a386d31)
 
 ## Tools Used
 
